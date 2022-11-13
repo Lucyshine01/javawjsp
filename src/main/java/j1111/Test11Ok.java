@@ -26,6 +26,7 @@ public class Test11Ok extends HttpServlet {
 		System.out.print("취미 : ");
 		for(String hobby : hobbys) {
 			System.err.print(hobby + " / ");
+			
 		}
 	}
 }
