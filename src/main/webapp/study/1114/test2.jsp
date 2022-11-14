@@ -6,7 +6,9 @@
   <title>title</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script></script>
+  <script>
+  	let type = document.getElementsByName("t123");
+  </script>
   <style></style>
 </head>
 <!-- 로그인창에서 '아이디/비밀번호/성명'을 입력후

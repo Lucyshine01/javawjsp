@@ -37,7 +37,8 @@ public class Test2 extends HttpServlet{
 		
 		mid = mid.trim();
 		pwd = pwd.trim();
-		
+		String type = request.getParameter("type");
+		System.out.println(type);
 		if(mid.equals("admin") && pwd.equals("1234")) {
 			out.println("<script>");
 			out.println("alert('관리자 인증 성공!!!');");
