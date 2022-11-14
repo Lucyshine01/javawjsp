@@ -40,6 +40,7 @@
         if(parseInt(menuSW)==0){
           $("#all-cat i").addClass("fa-xmark");
           $(".nav-item ul").slideDown(120);
+          /* $(".nav-item ul .ul-bg").slideUp(120); */
           $("#all-cat #all-bg").slideDown(120);
           menuSW = 1;
         }
@@ -67,7 +68,7 @@
 </head>
 <body>
   <div id="header" class="width">
-    <div><a href="#"><img src="sample-logo.png" alt="logo" id="logo"></a></div>
+    <div><a href="#"><img src="../../images/sample-logo.png" alt="logo" id="logo"></a></div>
     <div></div>
     <div id="head-loginimg" class="row">
       <div class="col">

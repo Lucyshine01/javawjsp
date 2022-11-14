@@ -9,4 +9,45 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- Controller설정(옛날 개발) -->
+  <!-- 
+  <servlet>
+  	<servlet-name>test2</servlet-name>
+  	<servlet-class>j1111.Test2</servlet-class>
+  </servlet>
+ 	<servlet-mapping>
+ 		<servlet-name>test2</servlet-name>
+ 		<url-pattern>/t2</url-pattern>
+ 	</servlet-mapping>
+   -->
+   
+   <!-- Controller설정 -->
+   <servlet>
+   	<servlet-name>test2</servlet-name>
+   	<servlet-class>j1111.Test2</servlet-class>
+   </servlet>
+   <servlet-mapping>
+   	<servlet-name>test2</servlet-name>
+   	<url-pattern>/T2</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+   	<servlet-name>test12</servlet-name>
+   	<servlet-class>j1111.Test12</servlet-class>
+   </servlet>
+   <servlet-mapping>
+   	<servlet-name>test12</servlet-name>
+   	<url-pattern>/t12</url-pattern>
+   </servlet-mapping>
+   
+   <servlet>
+   	<servlet-name>jsp_t12</servlet-name>
+   	<jsp-file>/study/1111/test12.jsp</jsp-file>
+   </servlet>
+   <servlet-mapping>
+   	<servlet-name>jsp_t12</servlet-name>
+   	<url-pattern>/jt12</url-pattern>
+   </servlet-mapping>
+   
 </web-app>
