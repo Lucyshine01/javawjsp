@@ -67,7 +67,7 @@ public class Test2_4 extends HttpServlet{
 //		response.sendRedirect(request.getContextPath()+"/study/1116/test2Ok3.jsp?strVo="+strVo);
 		
 		
-		// 저장소역할 : (request, session, application, getcontext) -> Model
+		// 저장소역할 : (request, session, application, pagecontext) -> Model
 		// 저장소(request)를 활용한 forwarding
 		// 저장소에 담기(현재 저장소에 값을 넣음)
 		request.setAttribute("vo", vo); // (뒤에 넣어진 변수를 담아갈 변수,현재 넣어줄 변수)

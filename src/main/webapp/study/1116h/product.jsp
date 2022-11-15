@@ -1,4 +1,12 @@
+<%@page import="j1116h.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("utf-8");
+	request.setCharacterEncoding("utf-8");
+	response.setContentType("text/html; charset=utf-8");
+	ProductVO vo = (ProductVO)request.getAttribute("vo");
+	System.out.println("관리자 페이지 : vo = "+vo);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,12 +103,8 @@
 </head>
 <body>
 <p><br/></p>
-<form name="myform" method="post" action="../../product_java">
+<form name="myform" method="post" action="<%=request.getContextPath()%>/main/list">
 <div class="container">
-  <div class="text">구매자</div>
-  <div class="input">
-    <input type="text" name="name" id="name" placeholder="성명" class="form-control mt-2 mb-2" required/>
-  </div>
   <div class="text">상품분류</div>
   <div class="input">
     <select name="product_list" id="product_list" class="form-control mt-2 mb-2">
