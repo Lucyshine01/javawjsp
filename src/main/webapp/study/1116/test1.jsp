@@ -12,7 +12,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>test1.jsp</title>
+  <title>title</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script>
@@ -26,22 +26,21 @@
 <body>
 <p><br/></p>
 <div class="container" style="border: 2px solid #ddd; border-radius: 10px; width: 600px;">
-	<form name="myform" method="post" action="<%=request.getContextPath()%>/1114_Test2">
-		<div style="text-align: center"><h2>로 그 인</h2></div>
+	<form name="myform" method="post" action="test1Ok.jsp">
+		<div style="text-align: center;" class="mt-2"><h2>로 그 인</h2></div>
 		<p>
-			아이디 : <input type="text" value="<%=mid%>" name="mid" id="mid" autofocus required class="form-control" >
+			아이디 : <input type="text" value="admin" name="mid" id="mid" autofocus required class="form-control mt-1" >
 		</p>
 		<p>
-			비밀번호 : <input type="password" value="<%=pwd%>" name="pwd" id="pwd" required class="form-control" >
+			비밀번호 : <input type="password" value="1234" name="pwd" id="pwd" required class="form-control mt-1" >
 		</p>
 		<p>
-			성명 : <input type="text" value="<%=name%>" name="name" id="name" required class="form-control" >
+			성명 : <input type="text" value="장지호" name="name" id="name" required class="form-control mt-1" >
 		</p>
 		<p style="display: grid; grid-template-columns: 1fr 1fr;">
 			<input type="submit" value="전송" class="btn btn-success form-control mr-2"/>
 			<input type="reset" value="다시입력" class="btn btn-warning form-control ml-2"/>
 		</p>
-		<input type="hidden" name="hostIp" value="<%=request.getRemoteAddr()%>"/>
 	</form>
 </div>
 <p><br/></p>

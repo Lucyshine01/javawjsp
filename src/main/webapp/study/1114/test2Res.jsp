@@ -2,7 +2,7 @@
 <%
 	String mid = request.getParameter("mid");
 	String name = request.getParameter("name");
-
+	String hostIp = request.getParameter("hostIp");
 %>
 <!DOCTYPE html>
 <html>
@@ -31,6 +31,7 @@
   요청 파라메터 길이 : <%=request.getContentLength() %><br/>
   현재 ContextPath : <%=request.getContextPath() %><br/>
   현재 사용중인 프로토콜 : <%=request.getProtocol() %><br/>
+  접속자 IP : <%=hostIp %><br/>
   <hr/>
   <p>
   	<!-- <a href="logout.jsp">로그아웃</a> -->

@@ -30,10 +30,12 @@ public class Test2 extends HttpServlet{
 //		}
 		
 		System.out.println("전송방식 : " + request.getMethod());
+		System.out.println("접속 IP : " + request.getRemoteAddr());
 		
 		mid = request.getParameter("mid") == null ? "" : request.getParameter("mid");		
 		String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
 		String name = request.getParameter("name") == null ? "" : request.getParameter("name");
+		String hostIp = request.getParameter("hostIp");
 		
 		mid = mid.trim();
 		pwd = pwd.trim();
@@ -42,13 +44,14 @@ public class Test2 extends HttpServlet{
 		if(mid.equals("admin") && pwd.equals("1234")) {
 			out.println("<script>");
 			out.println("alert('관리자 인증 성공!!!');");
-			out.println("location.href='"+request.getContextPath()+"/study/1114/test2Res.jsp?mid="+mid+"&name="+name+"';");
+			out.println("location.href='"+request.getContextPath()+"/study/1114/test2Res.jsp?mid="+mid+"&name="+name+"&hostIp="+hostIp+"';");
 			out.println("</script>");
 		}
 		else {
 			out.println("<script>");
 			out.println("alert('관리자 인증 실패!!!');");
-			out.println("history.back();");
+//			out.println("history.back();");
+			out.println("location.href='"+request.getContextPath()+"/study/1114/test2.jsp?mid="+mid+"&pwd="+pwd+"&name="+name+"';");
 			out.println("</script>");
 //			out.println("이곳은 j1114_Test2입니다.<br/>");
 //			out.println("<br/>아이디 : "+mid);

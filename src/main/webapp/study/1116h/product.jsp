@@ -95,7 +95,7 @@
 </head>
 <body>
 <p><br/></p>
-<form name="myform" method="post" action="<%=request.getContextPath()%>/j1116h/product">
+<form name="myform" method="post" action="../../product_java">
 <div class="container">
   <div class="text">구매자</div>
   <div class="input">
