@@ -100,6 +100,7 @@
       });
     });
   </script>
+  
 </head>
 <body>
 <p><br/></p>
@@ -108,11 +109,11 @@
   <div class="text">상품분류</div>
   <div class="input">
     <select name="product_list" id="product_list" class="form-control mt-2 mb-2">
-      <option value="CPU">CPU</option>
-      <option value="메모리">메모리</option>
-      <option value="그래픽카드">그래픽카드</option>
-      <option value="SSD">SSD</option>
-      <option value="HDD">HDD</option>
+      <option value="가전제품">가전제품</option>
+      <option value="가구">가구</option>
+      <option value="식료품">식료품</option>
+      <option value="장식품">장식품</option>
+      <option value="공구류">공구류</option>
     </select>
   </div>
   <div style="grid-column: 1/4;">
@@ -129,3 +130,19 @@
 <p><br/></p>
 </body>
 </html>
+<%
+  if(vo != null){
+		if(vo.getType() != null){
+      	out.println("<script>");
+      	out.println("let cnt2 = -1;");
+      for(int i=0; i<vo.getType().length; i++){
+      	out.println("cnt2--;");
+      	out.println("box.innerHTML +='<div class=\"item\" id=\"it'+cnt2+'\"><div style=\"text-align: center;\">상품명<div>(<input type=\"text\" class=\"typetxt\" value=\""+vo.getType()[i]+"\" name=\"type\" size=6>)</div></div><div><input type=\"text\" name=\"p_name\" value=\""+vo.getP_name()[i]+"\" class=\"form-control mt-2 mb-2\"></div></div>';");
+      	out.println("box.innerHTML +='<div class=\"item_price\" id=\"it_p'+cnt2+'\"><div class=\"text\">가격</div><div><input type=\"number\" name=\"p_price\" value=\""+vo.getP_price()[i]+"\" class=\"form-control mt-2 mb-2\"></div></div>';");
+      	out.println("box.innerHTML +='<div class=\"item_count\" id=\"it_c'+cnt2+'\"><div class=\"text\">수량</div><div><input type=\"number\" name=\"p_count\" value=\""+vo.getP_count()[i]+"\" class=\"form-control mt-2 mb-2\"></div>'+");
+      	out.println("'<div><input type=\"button\" value=\"삭제\" id=\"delete_btn1\" onclick=\"del('+cnt2+')\" class=\"btn btn-danger mt-2 mb-2\" style=\"float: right;\"></div></div>';");
+      }
+      	out.println("</script>");
+		}
+  }
+%>

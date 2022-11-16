@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/main/list")
-public class List extends HttpServlet {
+@WebServlet("/main/admin")
+public class Admin extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
@@ -19,7 +19,7 @@ public class List extends HttpServlet {
 																 request.getParameterValues("p_price"), request.getParameterValues("p_count"));
 		request.setAttribute("vo", vo);
 		PrintWriter out = response.getWriter();
-		String viewPage = "/study/1116h/main.jsp?page=admin";
+		String viewPage = "/study/1116h/product.jsp";
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}
 }

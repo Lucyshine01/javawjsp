@@ -26,7 +26,8 @@ public class LoginCheck extends HttpServlet {
 			request.getRequestDispatcher(viewPage).forward(request, response);
 		}
 		else {
-			out.println("<script>alert('관리자 로그인 실패!!!');</script>");
+//			out.println("<script>alert('관리자 로그인 실패!!!');</script>");
+			request.setAttribute("fail", "fail");
 			String viewPage = "/study/1116h/main.jsp";
 			request.getRequestDispatcher(viewPage).forward(request, response);
 		}
