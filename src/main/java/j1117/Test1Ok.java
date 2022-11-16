@@ -14,7 +14,7 @@ public class Test1Ok extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Null 체크...
-		String name = request.getParameter("name");
+		String[] name = request.getParameterValues("name");
 		String gender = request.getParameter("gender");
 		int age = Integer.parseInt(request.getParameter("age"));
 		String job = request.getParameter("job");

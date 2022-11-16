@@ -1,17 +1,17 @@
 package j1117;
 
 public class Test1VO {
-	private String name;
+	private String[] name;
 	private String gender;
 	private int age;
 	private String job;
 	private String address;
 	
-	public String getName() {
+	public String[] getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String[] name2) {
+		this.name = name2;
 	}
 	public String getGender() {
 		return gender;

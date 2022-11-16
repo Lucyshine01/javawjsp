@@ -44,7 +44,8 @@
       <tr>
 <!-- 생성된 클래스에 값을 꺼낼때 : jsp:setProperty -->
         <th>성명</th>
-        <td>${name} / <jsp:getProperty property="name" name="vo"/></td>   <%-- <%=vo.getName()%> --%> 
+        <td>${paramValues.name[0]}</td>   <%-- <%=vo.getName()%> --%> 
+        <td>${paramValues.name[1]}</td>    <%-- <%=vo.getName()%> --%> 
       </tr>
       <tr>
         <th>성별</th>

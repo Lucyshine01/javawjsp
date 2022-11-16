@@ -50,14 +50,14 @@
    	<url-pattern>/jt12</url-pattern>
    </servlet-mapping>
    
-   <servlet>
+   <!-- <servlet>
    	<servlet-name>main</servlet-name>
-   	<jsp-file>/study/1116h/main.jsp</jsp-file>
+   	<jsp-file>/study/1117h2/main.jsp</jsp-file>
    </servlet>
    <servlet-mapping>
    	<servlet-name>main</servlet-name>
    	<url-pattern>/main</url-pattern>
-   </servlet-mapping>
+   </servlet-mapping> -->
    
    <!-- 특정 서블릿에 초기값 할당하기 -->
    <!-- 

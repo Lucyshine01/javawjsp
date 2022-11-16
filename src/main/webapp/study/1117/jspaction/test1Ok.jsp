@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="vo" class="j1117.Test1VO"></jsp:useBean>
+<jsp:setProperty property="*" name="vo"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +18,8 @@
     <table class="table table-bordered">
       <tr>
         <th>성명</th>
-        <td>${vo.name}</td>   <%-- <%=vo.getName()%> --%> 
+        <td>${paramValues.name[0]}</td>   <%-- <%=vo.getName()%> --%> 
+        <td>${paramValues.name[1]}</td>   <%-- <%=vo.getName()%> --%> 
       </tr>
       <tr>
         <th>성별</th>
