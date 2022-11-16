@@ -11,7 +11,7 @@
 <div class="container">
   <h2>회원정보</h2>
   <%-- <form name="myform" method="post" action="${pageContext.request.contextPath}/j1117/Test1Ok"> --%>
-  <form name="myform" method="post" action="testF1Ok.jsp">
+  <form name="myform" method="post" action="testF3Ok.jsp">
   	<p>
   	  성명 : <input type="text" name="name" value="홍길동" autofocus class="form-control"/>
   	</p>
