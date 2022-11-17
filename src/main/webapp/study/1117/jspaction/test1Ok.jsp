@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="vo" class="j1117.Test1VO"></jsp:useBean>
+<jsp:useBean id="vo" class="study.j1117.Test1VO"></jsp:useBean>
 <jsp:setProperty property="*" name="vo"/>
 
 <!DOCTYPE html>

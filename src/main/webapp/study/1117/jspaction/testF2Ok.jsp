@@ -16,7 +16,7 @@
 <!-- 자바 클래스(VO)를 사용하여 넘어온 값들을 저장하고자 한다. -->
 <!-- 자바클래스는 jsp액션태그(jsp:useBean)을 사용한다. -->
 <!-- id(객체명) class(생성할 클래스) -->
-<jsp:useBean id="vo" class="j1117.Test1VO"/>
+<jsp:useBean id="vo" class="study.j1117.Test1VO"/>
 
 <!-- 생성된 클래스에 값을 넣을때 : jsp:setProperty -->
 <!-- name(변수명)-vo property(값) -->>
