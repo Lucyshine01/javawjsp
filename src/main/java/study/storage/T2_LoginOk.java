@@ -21,6 +21,7 @@ public class T2_LoginOk extends HttpServlet{
 		
 		if((mid.equals("admin") && pwd.equals("1234")) || (mid.equals("hkd1234") && pwd.equals("1234"))) {
 			Cookie cookieMid = new Cookie("cMid",mid);
+			// 웹 어플리케이션 전체 경로에서 사용하고자 할때로 설정("/")(웹어플리케이션의 모든 URL에서 전송가능하도록 설정)
 			cookieMid.setPath("/");
 			cookieMid.setMaxAge(60*5); // 쿠기의 만료시간을 5분으로 설정.
 			response.addCookie(cookieMid);
