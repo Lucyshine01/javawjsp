@@ -45,7 +45,7 @@
         <td colspan="2" style="text-align:center">
           <input type="button" value="회원가입" onclick="fCheck()" class="btn btn-success mr-3"/>
           <input type="reset" value="다시입력" class="btn btn-success mr-3"/>
-          <input type="button" value="돌아가기" onclick="${pageContext.request.contextPath}/study/1120_Database/login.jsp" class="btn btn-success"/>
+          <input type="button" value="돌아가기" onclick="location.href='${pageContext.request.contextPath}/study/1120_Database/login.jsp'" class="btn btn-success"/>
         </td>
       </tr>
     </table>

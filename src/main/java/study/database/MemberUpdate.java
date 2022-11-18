@@ -29,7 +29,7 @@ public class MemberUpdate extends HttpServlet{
 		}
 		else {
 			JusorokDAO dao = new JusorokDAO();
-			dao.updateUder(mid,pwd,name);
+			dao.updateUder(mid,pwd,name,(String)session.getAttribute("sMid"));
 			session.setAttribute("sMid", mid);
 			session.setAttribute("sPwd", pwd);
 			session.setAttribute("sName", name);

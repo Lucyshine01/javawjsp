@@ -176,7 +176,7 @@ public class JusorokDAO {
 			pstmt.setString(1, vo.getMid());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				over = true;
+				if(rs.getString("mid")!=null) over = true;
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
@@ -228,14 +228,14 @@ public class JusorokDAO {
 	}
 	
 	// 유저 정보 수정
-	public void updateUder(String mid, String pwd, String name) {
+	public void updateUder(String mid, String pwd, String name, String sMid) {
 		try {
 			sql = "update jusorok set mid = ?, pwd = ?, name = ? where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			pstmt.setString(2, pwd);
 			pstmt.setString(3, name);
-			pstmt.setString(4, mid);
+			pstmt.setString(4, sMid);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());

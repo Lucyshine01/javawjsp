@@ -25,6 +25,7 @@ public class JoinOk extends HttpServlet {
 		
 		JusorokDAO dao = new JusorokDAO();
 		PrintWriter out = response .getWriter();
+		int res = 0;
 		
 		// 아이디 중복체크........
 		boolean over = false;
@@ -35,9 +36,10 @@ public class JoinOk extends HttpServlet {
 			out.println("location.href='"+request.getContextPath()+"/study/1120_Database/join.jsp'");
 			out.println("</script>");
 		}
-		
-		//중복체크후 정상자료일경우 DB에 정상처리
-		int res = dao.setJoinOk(vo);
+		else {
+			//중복체크후 정상자료일경우 DB에 정상처리
+			res = dao.setJoinOk(vo);
+		}
 		
 		if(res == 1) {
 			out.println("<script>"
