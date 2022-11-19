@@ -36,7 +36,7 @@ public class SearchMid extends HttpServlet{
 		
 		out.println("<script>");
 		if(vos.size() != 0) {
-			session.setAttribute("vos", vos);
+			request.setAttribute("vos", vos);
 			out.println("location.href='"+request.getContextPath()+"/study/1120_Database/memberSearch.jsp'");
 		}
 		else {

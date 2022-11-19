@@ -43,7 +43,6 @@
 					<td>${vo.name}</td><td>${vo.point}</td><td>${vo.lastDate}</td>
 				</tr>
 				</c:forEach>
-				<%session.removeAttribute("vos");%>
 			</c:if>
 		</table>
 	<br/>
