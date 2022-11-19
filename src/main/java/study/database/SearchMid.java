@@ -2,6 +2,7 @@ package study.database;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,30 +10,39 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/database/SearchMid")
 public class SearchMid extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String idx = request.getParameter("idx")==null ? "" : request.getParameter("idx");
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
-		
+		String name = request.getParameter("name")==null ? "" : request.getParameter("name");
 		JusorokDAO dao = new JusorokDAO();
-		
-		JusorokVO vo = dao.getMemberSearch(mid);
+		ArrayList<JusorokVO> vos = new ArrayList<>();
+		HttpSession session = request.getSession();
 		
 		PrintWriter out = response.getWriter();
-		
-		if(vo.getName() != null) {
-			request.setAttribute("vo", vo);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/study/1120_Database/memberSearch.jsp");
-			dispatcher.forward(request, response);
+		if(idx.equals("") && mid.equals("") && name.equals("")) {
+			out.println("<script>");
+			out.println("alert('입력을 마치시고 검색해주세요!');");
+			out.println("location.href='"+request.getContextPath()+"/study/1120_Database/memberSearch.jsp'");
+			out.println("</script>");
 		}
 		else {
-			// 회원 인증 실패시 처리
-			out.println("<script>");
-			out.println("alert('조회할 멤버가 없습니다!');");
-			out.println("location.href='"+request.getContextPath()+"/study/1120_Database/member.jsp'");
-			out.println("</script>");			
+			vos = dao.searchMember(idx,mid,name);
 		}
+		
+		out.println("<script>");
+		if(vos.size() != 0) {
+			session.setAttribute("vos", vos);
+			out.println("location.href='"+request.getContextPath()+"/study/1120_Database/memberSearch.jsp'");
+		}
+		else {
+			out.println("alert('검색 결과가 없습니다!');");
+			out.println("location.href='"+request.getContextPath()+"/study/1120_Database/memberSearch.jsp'");
+		}
+		out.println("</script>");
 	}
 }

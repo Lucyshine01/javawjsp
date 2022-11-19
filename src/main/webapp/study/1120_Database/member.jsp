@@ -29,7 +29,8 @@
 	<hr/>
 	<div style="width:600px; margin: 0 auto;">
 		<div><a href="${pageContext.request.contextPath}/database/MyInfoUpdate" class="btn btn-warning form-control m-3">개인 정보 수정</a></div>
-		<div><a href="javascript:searchMid()" class="btn btn-success form-control m-3">개별 회원 조회</a></div>
+		<!-- <div><a href="javascript:searchMid()" class="btn btn-success form-control m-3">개별 회원 조회</a></div> -->
+		<div><a href="${pageContext.request.contextPath}/study/1120_Database/memberSearch.jsp" class="btn btn-success form-control m-3">개별 회원 조회</a></div>
 		<div><a href="${pageContext.request.contextPath}/database/MemberList" class="btn btn-primary form-control m-3">회원 전체 조회</a></div>
 		<div><a href="${pageContext.request.contextPath}/database/LogOut" class="btn btn-secondary form-control m-3">로그아웃</a></div>
 	</div>

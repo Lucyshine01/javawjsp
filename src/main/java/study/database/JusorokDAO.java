@@ -243,4 +243,38 @@ public class JusorokDAO {
 			pstmtClose();
 		}
 	}
+	
+	// 유저 검색
+	public ArrayList<JusorokVO> searchMember(String idx, String mid, String name) {
+		ArrayList<JusorokVO> vos = new ArrayList<>();
+		try {
+			sql = "select * from jusorok where idx like ? and mid like ? and name like ?;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+idx+"%");
+			pstmt.setString(2, "%"+mid+"%");
+			pstmt.setString(3, "%"+name+"%");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				JusorokVO vo = new JusorokVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				String pwd = rs.getString("pwd");
+				String secretPwd = pwd.substring(0,2);
+				for(int i=0; i<pwd.substring(2).length(); i++) {
+					secretPwd += "*";
+				}
+				vo.setPwd(secretPwd);
+				vo.setName(rs.getString("name"));
+				vo.setPoint(rs.getInt("point"));
+				vo.setLastDate(rs.getString("lastDate").substring(0,16));
+				vo.setToday(rs.getInt("today"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
 }
