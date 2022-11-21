@@ -61,25 +61,25 @@
 			</c:if>
 		</c:forEach>
 		<c:choose>
-				<c:when test="${cnt==0}">
-					<font color="red"><b>
-						해당 문자가 없습니다!
-					</b></font>
-				</c:when>
-				<c:when test="${cnt==1}">
-					<font color="red"><b>
-						${fn:substring(str,0,fn:length(str)-1)}<br/>
-						두번째 값 없음.
-					</b></font>
-				</c:when>
-				<c:otherwise>
-					<font color="red"><b>
-						<c:set var="strs" value="${fn:split(str,'/')}"/>
-						<c:forEach var="i" begin="0" end="${fn:length(strs)}">
-							${strs[i]}<br/>
-						</c:forEach>
-					</b></font>
-				</c:otherwise>
+			<c:when test="${cnt==0}">
+				<font color="red"><b>
+					해당 문자가 없습니다!
+				</b></font>
+			</c:when>
+			<c:when test="${cnt==1}">
+				<font color="red"><b>
+					${fn:substring(str,0,fn:length(str)-1)}<br/>
+					두번째 값 없음.
+				</b></font>
+			</c:when>
+			<c:otherwise>
+				<font color="red"><b>
+					<c:set var="strs" value="${fn:split(str,'/')}"/>
+					<c:forEach var="i" begin="0" end="${fn:length(strs)}">
+						${strs[i]}<br/>
+					</c:forEach>
+				</b></font>
+			</c:otherwise>
 		</c:choose>
 		
 		<br/><p></p>
@@ -91,37 +91,39 @@
 		
 		<c:set var="atom" value="Welcome to My Homepage!"/>
 		<c:set var="str" value=""/>
-		<c:set var="cnt3" value="0" />
-		<c:forEach begin="0" end="${fn:length(atom)-1}" varStatus="st">
-			<c:set var="cnt3" value="${cnt3+1}"/>
-			<c:if test="${fn:indexOf(atom,'o') == cnt3}">
-				<c:set var="str" value="${str}${fn:length(substringBefore(atom,'o'))}번째 'o'위치 /"/>
-				<c:set var="atom" value="${fn:substringAfter(atom,'o')}"/>
+		<c:set var="cnt" value="0"/>
+		<c:set var="nextIdx" value="0"/>
+		<c:forEach begin="0" end="${fn:length(atom)}" varStatus="st">
+			<c:if test="${fn:indexOf(atom,'o') == nextIdx}">
+				<c:set var="cnt" value="${cnt+1}"/>
+				<c:set var="str" value="${str}${cnt}번째 인덱스 ${st.index}번/"/>
+				<c:set var="atom" value="${fn:substringAfter(atom, 'o')}"/>
+				<c:set var="nextIdx" value="-1"/>
 			</c:if>
+			<c:set var="nextIdx" value="${nextIdx+1}"/>
 		</c:forEach>
 		<c:choose>
-				<c:when test="${cnt==0}">
-					<font color="red"><b>
-						해당 문자가 없습니다!
-					</b></font>
-				</c:when>
-				<c:when test="${cnt==1}">
-					<font color="red"><b>
-						${fn:substring(str,0,fn:length(str)-1)}<br/>
-						두번째 값 없음.
-					</b></font>
-				</c:when>
-				<c:otherwise>
-					<font color="red"><b>
-						<c:set var="strs" value="${fn:split(str,'/')}"/>
-						<c:forEach var="i" begin="0" end="${fn:length(strs)}">
-							${strs[i]}<br/>
-						</c:forEach>
-					</b></font>
-				</c:otherwise>
+			<c:when test="${cnt==0}">
+				<font color="red"><b>
+					해당 문자가 없습니다!<br/>
+				</b></font>
+			</c:when>
+			<c:when test="${cnt==1}">
+				<font color="red"><b>
+					${fn:substring(str,0,fn:length(str)-1)}<br/>
+					두번째 값 없음.
+				</b></font>
+			</c:when>
+			<c:otherwise>
+				<font color="red"><b>
+					<c:set var="strs" value="${fn:split(str,'/')}"/>
+					<c:forEach var="i" begin="0" end="${fn:length(strs)}">
+						${strs[i]}<br/>
+					</c:forEach>
+				</b></font>
+			</c:otherwise>
 		</c:choose>
-		
-		
+		<br/>
 		7.문자열 불리(split(변수, 분리할문자))<br/>
 			'o'문자를 기준으로 분리하자? <br/>
 			<c:set var="atoms" value="${fn:split(atom,'o')}"/>
