@@ -35,7 +35,8 @@
 			<c:when test="${cnt==1}">
 				<font color="red"><b>
 					${fn:substring(str,0,fn:length(str)-1)}<br/>
-					두번째 값이 존재하지 않습니다!
+					두번째 값이 존재하지 않습니다!<br/><br/>
+					전체갯수 : ${cnt}개<br/>
 				</b></font>
 			</c:when>
 			<c:otherwise>
@@ -44,6 +45,7 @@
 					<c:forEach var="i" begin="0" end="${fn:length(strs)}">
 						${strs[i]}<br/>
 					</c:forEach>
+					전체갯수 : ${cnt}개<br/>
 				</b></font>
 			</c:otherwise>
 		</c:choose>
@@ -73,7 +75,8 @@
 			<c:when test="${cnt==1}">
 				<font color="red"><b>
 					${fn:substring(str,0,fn:length(str)-1)}<br/>
-					두번째 값이 존재하지 않습니다!
+					두번째 값이 존재하지 않습니다!<br/><br/>
+					전체갯수 : ${cnt}개<br/>
 				</b></font>
 			</c:when>
 			<c:otherwise>
@@ -82,6 +85,7 @@
 					<c:forEach var="i" begin="0" end="${fn:length(strs)}">
 						${strs[i]}<br/>
 					</c:forEach>
+					전체갯수 : ${cnt}개<br/>
 				</b></font>
 			</c:otherwise>
 		</c:choose>
@@ -96,7 +100,7 @@
 		<c:set var="cnt" value="0" />
 		<c:forEach var="i" begin="0" end="${fn:length(atom)-1}" varStatus="st">
 		 	<c:if test="${fn:substring(atom,i,i+1) == 'o'}">
-		 		<c:set var="temp" value="${cnt+1}번째 'o'의 위치는 ${i}입니다./"/>
+		 		<c:set var="temp" value="${cnt+1}번째 'o'문자 인덱스위치 ${i}번/"/>
 		 		<c:set var="str" value="${str}${temp}"/>
 				<c:set var="cnt" value="${cnt+1}"/>
 			</c:if>
@@ -110,7 +114,8 @@
 			<c:when test="${cnt==1}">
 				<font color="red"><b>
 					${fn:substring(str,0,fn:length(str)-1)}<br/>
-					두번째 값이 존재하지 않습니다!
+					두번째 값이 존재하지 않습니다!<br/><br/>
+					전체갯수 : ${cnt}개<br/>
 				</b></font>
 			</c:when>
 			<c:otherwise>
@@ -119,6 +124,7 @@
 					<c:forEach var="i" begin="0" end="${fn:length(strs)}">
 						${strs[i]}<br/>
 					</c:forEach>
+					전체갯수 : ${cnt}개<br/>
 				</b></font>
 			</c:otherwise>
 		</c:choose>
@@ -150,7 +156,8 @@
 			<c:when test="${cnt==1}">
 				<font color="red"><b>
 					${fn:substring(str,0,fn:length(str)-1)}<br/>
-					두번째 값이 존재하지 않습니다!
+					두번째 값이 존재하지 않습니다!<br/><br/>
+					전체갯수 : ${cnt}개<br/>
 				</b></font>
 			</c:when>
 			<c:otherwise>
@@ -159,6 +166,7 @@
 					<c:forEach var="i" begin="0" end="${fn:length(strs)}">
 						${strs[i]}<br/>
 					</c:forEach>
+					전체갯수 : ${cnt}개<br/>
 				</b></font>
 			</c:otherwise>
 		</c:choose>
