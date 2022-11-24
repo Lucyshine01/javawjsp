@@ -157,29 +157,30 @@
   </c:forEach>
 </div>
 <%-- 		</c:if> --%> 
-	<div>
-		<ul class="pagination justify-content-center">
-				<c:if test="${pag > 1}">
-					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=1">첫페이지</a></li>
+	<div class="text-center">
+		<c:if test="${pag > 1}">
+			<a href="${ctp}/guList.gu?pag=1" class="btn btn-primary mr-2">첫페이지</a>
+		</c:if>
+		
+		<c:if test="${curBlock > 0}">
+			<a href="${ctp}/guList.gu?pag=${(curBlock-1)*blockSize + 1}" class="btn btn-primary mr-2">이전블록</a>
+		</c:if>
+		<c:forEach var="i" begin="${curBlock*blockSize + 1}" end="${curBlock*blockSize + blockSize}" varStatus="st">
+			<c:if test="${i <= totPage}">
+				<c:if test="${i == pag}">
+					<a href="${ctp}/guList.gu?pag=${i}" class="btn btn-warning">${i}p</a>
 				</c:if>
-				<c:if test="${curBlock > 0}">
-					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li>
+				<c:if test="${i != pag}">
+					<a href="${ctp}/guList.gu?pag=${i}" class="btn btn-primary">${i}p</a>
 				</c:if>
-			<c:forEach var="i" begin="${curBlock*blockSize + 1}" end="${curBlock*blockSize + blockSize}" varStatus="st">
-					<c:if test="${i <= totPage && i == pag}">
-						<li class="page-item active "><a class="page-link bg-secondary border-secondary" href="${ctp}/guList.gu?pag=${i}">${i}</a></li>
-					</c:if>
-					<c:if test="${i <= totPage && i != pag}">
-						<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${i}">${i}</a></li>
-					</c:if>
-			</c:forEach>
-				<c:if test="${curBlock < lastBlock}">
-					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${(curBlock+1)*blockSize + 1}">다음블록</a></li>
-				</c:if>
-				<c:if test="${pag < totPage}">
-					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${totPage}">마지막페이지</a></li>
-				</c:if>
-		</ul>
+			</c:if>
+		</c:forEach>
+		<c:if test="${curBlock < lastBlock}">
+			<a href="${ctp}/guList.gu?pag=${(curBlock+1)*blockSize + 1}" class="btn btn-primary ml-2">다음블록</a>
+		</c:if>
+		<c:if test="${pag < totPage}">
+			<a href="${ctp}/guList.gu?pag=${totPage}" class="btn btn-primary ml-2">마지막페이지</a>
+		</c:if>
 	</div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>

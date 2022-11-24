@@ -23,7 +23,7 @@ public class GuInputOkCommand implements GuestInterface {
 		name = name.replace("<", "&lt").replace(">", "&gt");
 		email = email.replace("<", "&lt").replace(">", "&gt");
 		homePage = homePage.replace("<", "&lt").replace(">", "&gt");
-//		content = content.replace("<", "&lt").replace(">", "&gt");
+		//content = content.replace("<", "&lt").replace(">", "&gt");
 		
 		vo.setName(name);
 		vo.setEmail(email);

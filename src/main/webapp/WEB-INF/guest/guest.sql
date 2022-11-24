@@ -22,3 +22,9 @@ select * from guest;
 drop table guest;
 
 select * from guest order by idx desc;
+
+select count(*) from guest;
+
+select count(*) as cnt from guest
+
+

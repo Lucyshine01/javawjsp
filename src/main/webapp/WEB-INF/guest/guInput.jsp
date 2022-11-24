@@ -17,19 +17,17 @@
   		let regName = /[a-zA-Z0-9가-힣]{2,20}/g;
   		let regMail = /[a-zA-Z0-9]{4,20}\@[a-zA-Z0-9]{4,20}\.[a-zA-Z]{1,3}/g;
   		
-  		if() {
-  			
-  		}
   		
   		if(!name.match(regName)){
-  			alert("이름 틀림!");
+  			alert("이름 양식 틀림!");
   			return false;
   		}
   		else if(!email.match(regMail) && email != ""){
-  			alert("이메일 틀림!");
+  			alert("이메일 양식 틀림!");
   			return false;
   		}
-  		myform.submit;
+  		
+  		myform.submit();
 
 		}
   </script>
