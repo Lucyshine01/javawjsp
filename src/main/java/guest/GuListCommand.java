@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class GuListCommand implements GuestInterface {
 	/*	페이징처리
@@ -24,11 +25,26 @@ public class GuListCommand implements GuestInterface {
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		
 		// 2. 한 페이지의 분량을 결정한다.
-		int pageSize = 5;
+		
+		//int pageSize = request.getParameter("pageSize")==null ? 5 : Integer.parseInt(request.getParameter("pageSize"));
+		
+		HttpSession session = request.getSession();
+		System.out.println("넘어온 pageSize값(Parameter) : "+request.getParameter("pageSize"));
+		String pgsTest = session.getAttribute("pgs")==null ? "null" : session.getAttribute("pgs").toString();
+		System.out.println("넘어온 pgs 세션값(Attribute) : " + pgsTest);
+		
+		// 넘어온 select값이 있으면 select값으로 글 표시수 반영
+		// ,없을경우 기존 세션에 있는 pgs수로 글 표시수 반영
+		int pageSize;
+		if(request.getParameter("pageSize")==null) {
+			if(session.getAttribute("pgs")==null) pageSize = 5;
+			else pageSize = Integer.parseInt(session.getAttribute("pgs").toString());
+		}
+		else pageSize = Integer.parseInt(request.getParameter("pageSize"));
+		session.setAttribute("pgs", pageSize);
 		
 		// 3. 총 레코드 건수를 구한다.
 		int totRecCnt = dao.totRecCnt();
-		System.out.println("totRecCnt : "+totRecCnt);
 		
 		// 4. 총 페이지 건수를 구한다.
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (totRecCnt / pageSize)+1;

@@ -25,6 +25,13 @@
 			if(ans) location.href="${ctp}/guDelete.gu?idx="+idx;
 		}
   	
+  	/* 
+  	function pageSizeChg() {
+	    let pageSelect = document.getElementById("pageSize");
+  		location.href="${ctp}/guList.gu?pgs="+pageSelect.options[pageSelect.selectedIndex].value;
+		}
+  	 */
+  	 
   	//이미지 크기제한
   	$(function(){
   		$("img").each(function () {
@@ -65,7 +72,37 @@
   </table>
   <table class="table table-borderless m-0 p-0">
   	<tr>
+  		<td class="text-left">
+  			<h5>글 표시수</h5>
+  			<!-- <select name="pageSize" id="pageSize" onchange="pageSizeChg()"> -->
+  			<%-- 
+  			<c:choose>
+  				<c:when test="${pgs==null}"><c:set var="pgs" value="5"/></c:when>
+  				<c:otherwise><c:set var="pgs" value="${pgs}"/></c:otherwise>
+  			</c:choose>
+  			 --%>
+  			<%--  
+  			<%
+  				System.out.println("psg : "+(String)request.getAttribute("pgs"));
+	  			String pgs = request.getAttribute("pgs")==null ? "5" : (String)request.getAttribute("pgs");
+	  			request.setAttribute("pgs", pgs);
+  			%>
+  			 --%>
+  			<form method="post" action="${ctp}/guList.gu?pag=${pag}">
+					<select name="pageSize" id="pageSize" onchange="submit();" class="text-center">
+						<option value="5" <c:if test="${pgs==5}">selected</c:if>>5개</option>
+						<option value="10" <c:if test="${pgs==10}">selected</c:if>>10개</option>
+						<option value="25" <c:if test="${pgs==25}">selected</c:if>>25개</option>
+						<option value="50" <c:if test="${pgs==50}">selected</c:if>>50개</option>
+						<option value="100" <c:if test="${pgs==100}">selected</c:if>>100개</option>
+					</select>
+  			</form>
+  		</td>
   		<td class="text-right">
+  		
+  			<!-- 현재 페이지가 최대페이지를 넘어갈 경우 최대페이지로 변환 -->
+  			<c:if test="${pag>totPage}"><script>location.href="${ctp}/guList.gu?pag=${totPage}";</script></c:if>
+  			
   			<!-- 첫페이지 / 이전페이지 / (현페이지번호/총페이지수) / 다음페이지 / 마지막페이지 -->
   			<c:if test="${pag > 1}">
   				<a href="${ctp}/guList.gu?pag=1">[첫페이지]</a>
@@ -88,7 +125,7 @@
 			<c:if test="${pag ne st.count}">
 				<a href="${ctp}/guList.gu?pag=${st.count}" class="btn btn-primary" style="width: 40px">${st.count}</a>
 			</c:if>
-		</c:forEach> 
+		</c:forEach>
 	</div>
 	
 	<!-- 첫페이지 / 이전블록 / 1(4) 2(5) 3(6) / 다음블록 / 마지막페이지-->
