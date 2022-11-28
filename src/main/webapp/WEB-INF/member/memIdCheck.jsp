@@ -24,6 +24,9 @@
 		// 부모창에 아이디값 보내기
 		function sendCheck() {
 			opener.window.document.myform.mid.value = '${mid}';
+			opener.window.document.myform.midCheck.value = 1;
+			
+			opener.window.document.getElementById("midCheck_label").style.visibility = "hidden";
 			opener.window.document.myform.pwd.focus();
 			window.close();
 		}

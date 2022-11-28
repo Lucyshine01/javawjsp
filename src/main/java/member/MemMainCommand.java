@@ -11,13 +11,12 @@ public class MemMainCommand implements MemberInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 과제 : 메인 메뉴에 있는 위에 4개 + 방명록에 올린 글수 아이디,닉네임으로 몇개인지 확인
-		
 		HttpSession session = request.getSession();
 		
 		String mid = (String) session.getAttribute("sMid");
 		
 		MemberDAO memDao = new MemberDAO();
+		
 		
 		MemberVO vo = memDao.getLoginCheck(mid);
 		
@@ -36,7 +35,12 @@ public class MemMainCommand implements MemberInterface {
 		request.setAttribute("strLevel", strLevel);
 		
 		// 사용자가 방명록에서 글쓴 횟수 가져오기.....
+		MemberDAO dao = new MemberDAO();
 		
+		String nickName = (String) session.getAttribute("sNickName");
+		
+		int guestCnt = dao.getGuestCnt(mid,nickName);
+		request.setAttribute("guestCnt", guestCnt);
 		
 	}
 

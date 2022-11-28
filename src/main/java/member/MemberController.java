@@ -42,6 +42,11 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/memIdCheck.jsp";
 		}
+		else if(cmd.equals("/memNickNameCheck")) {
+			command = new MemNickNameCheckCommand();
+			command.execute(request, response);
+			viewPage += "/memNickNameCheck.jsp";
+		}
 		else if(cmd.equals("/memJoin")) {
 			viewPage += "/memJoin.jsp";
 		}

@@ -95,4 +95,43 @@ public class MemberDAO {
 			getConn.pstmtClose();
 		}
 	}
+	
+	// 닉네임 중복 처리
+	public int getNickNameCheck(String nickName) {
+		int res = 1;
+		try {
+			sql = "select * from member where nickName = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nickName);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				res = 0;
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return res;
+	}
+	
+	// 해당 계정으로 작성한 방명록 게시수
+	public int getGuestCnt(String mid, String nickName) {
+		int guestCnt = 0;
+		try {
+			sql = "select count(*) as cnt from guest where name = ? or name = ?;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, nickName);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				guestCnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return guestCnt;
+	}
 }

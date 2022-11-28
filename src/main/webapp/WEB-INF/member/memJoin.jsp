@@ -14,13 +14,6 @@
   	'use strict'
   	// 회원가입폼 체크후 서비로 전송(submit)
   	function fCheck() {
-			// 폼의 유효성 검사~~~~
-			// 숙제...
-			
-			let tel1 = myform.tel1.value;
-			let tel2 = myform.tel2.value;
-			let tel3 = myform.tel3.value;
-			let tel = tel1 + "-" + tel2 + "-" + tel3;
 			
 			let maxSize = 1024 * 1024 * 1;	// 1MByte 까지 허용
 			let fName = myform.fName.value;
@@ -57,15 +50,30 @@
 			// 전송전에 모든 체크가 끝났다면 submitFlag가 1일 되도록 처리후 서버로 전송한다.
 			if(submitFlag == 1){
 				// 아이디와 닉네임 중복체크버튼에 대한 체크...
-				
+				let midCheck = myform.midCheck.value;
+				let nickNameCheck = myform.nickNameCheck.value;
+				if(midCheck != 1){
+					alert("아이디 중복체크를 하세요!");
+					return false;
+				}
+				else if(nickNameCheck != 1){
+					alert("닉네임 중복체크를 하세요!");
+					return false;
+				}
 				
 				// 이메일을 하나로 묶어준다.
 				let email1 = myform.email1.value;
+				let email1_2 = myform.email1_2.value;
 				let email2 = myform.email2.value;
-				myform.email.value = email1 + "@" + email2;
+				myform.email.value = email1 + "@" + email1_2 + email2;
 				
 				// 전화번호 합치기
+				let tel1 = myform.tel1.value;
+				let tel2 = myform.tel2.value;
+				let tel3 = myform.tel3.value;
+				let tel = tel1 + "-" + tel2 + "-" + tel3;
 				myform.tel.value = tel;
+				
 				// 전송전에 '주소'를 하나로 묶어서 전송처리
 				let postcode = myform.postcode.value + " ";
 				let roadAddress = myform.roadAddress.valude + " ";
@@ -73,6 +81,53 @@
 				let extraAddress = myform.extraAddress.valude + " ";
 				myform.address.value = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress;
 				
+
+				// 폼의 유효성 검사~~~~
+				// 숙제...
+				let regId = /^([a-zA-Z0-9]){6,20}$/g;   //아이디는 영문소문자,대문자,숫자,밑줄만 사용가능  
+	      let regPwd = /^([!@#$%^&+=<>?,\./\*()_-]?[a-zA-Z0-9]){6,20}$/g;  //비밀번호는 영문대,소문자,숫자,키보드에서 입력가능한 특수문자 사용가능 최소6자~최대20자
+	      let regNick = /^([가-힣a-zA-Z]{2,20})$/g;  //닉네임은 한글/영문만 가능하도록 길이는 2~20자까지
+	      let regName = /^([가-힣a-zA-Z]{2,20})$/g;  //성명은 한글/영문만 가능하도록 길이는 2~20자까지
+	      let regEmail = /^([-_.]?[0-9a-zA-Z]){4,20}@+([-_.]?[0-9a-zA-Z]){4,20}.+[a-zA-Z]{2,3}$/i; //이메일 형식에 맞도록 체크(a@b.c)
+				let regTel = /^([0-9]){2,3}-+([0-9]){3,4}-+([0-9]){3,4}$/g;
+				
+	      let mid = myform.mid.value;
+	      let pwd = myform.pwd.value;
+	      let nickName = myform.nickName.value;
+	      let name = myform.name.value;
+	      let email = email1 + "@" + email1_2 + email2;
+	      
+				if(!mid.match(regId)){
+					alert("허용되지 않는 아이디입니다!");
+          document.getElementById("mid").focus();
+          return false;
+				}
+				else if(!pwd.match(regPwd)){
+					alert("허용되지 않는 비밀번호입니다!");
+          document.getElementById("pwd").focus();
+          return false;
+				}
+				else if(!nickName.match(regNick)){
+					alert("허용되지 않는 닉네임입니다!");
+          document.getElementById("nickName").focus();
+          return false;
+				}
+				else if(!name.match(regName)){
+					alert("허용되지 않는 성명입니다!");
+          document.getElementById("name").focus();
+          return false;
+				}
+				else if(!email.match(regEmail)){
+					alert("허용되지 않는 이메일입니다!");
+          document.getElementById("email1").focus();
+          return false;
+				}
+				else if(!tel.match(regTel) && tel != "010--"){
+					alert("허용되지 않는 전화번호입니다!");
+          document.getElementById("tel2").focus();
+          return false;
+				}
+				alert("회원 가입성공!");
 				myform.submit();
 			}
 			else {
@@ -95,6 +150,42 @@
 			}
 		}
   	
+  	// nickName 중복체크
+  	function nickCheck() {
+			let nickName = myform.nickName.value;
+			let url = "${ctp}/memNickNameCheck.mem?nickName="+nickName;
+			if(nickName.trim() == ""){
+				alert("닉네임을 입력하세요!");
+				myform.mid.focus();
+			}
+			else {
+				window.open(url,"nWin","width=580px,height=250px");
+			}
+		}
+  	
+  	//중복체크 확인 표시
+  	function midOverCheck() {
+  		myform.midCheck.value = 0;
+  		document.getElementById("midCheck_label").style.visibility = "visible";
+		}
+  	
+  	function nickOverCheck() {
+  		myform.nickNameCheck.value = 0;
+  		document.getElementById("nickNameCheck_label").style.visibility = "visible";
+		}
+  	
+  	// 이메일 직접입력
+  	$(function name() {
+			$("#email2").change(function(){
+				if (this.value == "") {
+					$('#email1_2').attr('disabled', false);
+				}
+				else {
+					$('#email1_2').val("");
+					$('#email1_2').attr('disabled', true);
+				}
+			});
+		});
   	
   </script>
   <style></style>
@@ -108,15 +199,21 @@
     <br/>
     <div class="form-group">
       <label for="mid">아이디 : &nbsp; &nbsp;<input type="button" value="아이디 중복체크" class="btn btn-secondary btn-sm" onclick="idCheck()"/></label>
-      <input type="text" class="form-control" name="mid" id="mid" placeholder="아이디를 입력하세요." required autofocus/>
+      <!-- 아이디 중복체크 표시 -->
+      <input type="hidden" value="0" id="midCheck"/>
+      <span id="midCheck_label"><font color="red" style="font-size: 0.8em">아이디 중복체크를 하세요.</font></span>
+      <input type="text" class="form-control" name="mid" id="mid" onchange="midOverCheck()" placeholder="아이디를 입력하세요." required autofocus/>
     </div>
     <div class="form-group">
       <label for="pwd">비밀번호 :</label>
       <input type="password" class="form-control" id="pwd" placeholder="비밀번호를 입력하세요." name="pwd" required />
     </div>
     <div class="form-group">
-      <label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" value="닉네임 중복체크" class="btn btn-secondary btn-sm" onclick="nickCheck()"/></label>
-      <input type="text" class="form-control" id="nickName" placeholder="별명을 입력하세요." name="nickName" required />
+      <label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" value="닉네임 중복체크" class="btn btn-secondary btn-sm" onclick="nickCheck()" /></label>
+      <!-- 닉네임 중복체크 표시 -->
+      <input type="hidden" value="0" id="nickNameCheck"/>
+      <span id="nickNameCheck_label"><font color="red" style="font-size: 0.8em">닉네임 중복체크를 하세요.</font></span>
+      <input type="text" class="form-control" id="nickName" onchange="nickOverCheck()" placeholder="별명을 입력하세요." name="nickName" required />
     </div>
     <div class="form-group">
       <label for="name">성명 :</label>
@@ -125,15 +222,18 @@
     <div class="form-group">
       <label for="email1">Email address:</label>
 				<div class="input-group mb-3">
-				  <input type="text" class="form-control" placeholder="Email을 입력하세요." id="email1" name="email1" required />
-				  <div class="input-group-append">
-				    <select name="email2" class="custom-select">
+				  <input type="text" class="form-control" placeholder="Email을 입력하세요." id="email1" name="email1" required/>
+				  <span style="font-size: 1.3em;padding: 3px 10px;">@</span>
+				  <input type="text" class="form-control"  id="email1_2" name="email1_2" value="" required disabled/>
+				  <div class="input-group-append" style="padding-left: 10px">
+				    <select name="email2" id="email2" class="custom-select">
 					    <option value="naver.com" selected>naver.com</option>
 					    <option value="hanmail.net">hanmail.net</option>
 					    <option value="hotmail.com">hotmail.com</option>
 					    <option value="gmail.com">gmail.com</option>
 					    <option value="nate.com">nate.com</option>
 					    <option value="yahoo.com">yahoo.com</option>
+					    <option value="">직접입력</option>
 					  </select>
 				  </div>
 				</div>
