@@ -25,6 +25,7 @@ select * from guest order by idx desc;
 
 select count(*) from guest;
 
-select count(*) as cnt from guest
+select count(*) as cnt from guest;
 
+select count(*) as cnt from guest where name = '러시아 마피아' or name = '홍길동';
 

@@ -89,7 +89,7 @@
   			%>
   			 --%>
   			<form method="post" action="${ctp}/guList.gu?pag=${pag}">
-					<select name="pageSize" id="pageSize" onchange="submit();" class="text-center">
+					<select name="pgs" id="pgs" onchange="submit();" class="text-center">
 						<option value="5" <c:if test="${pgs==5}">selected</c:if>>5개</option>
 						<option value="10" <c:if test="${pgs==10}">selected</c:if>>10개</option>
 						<option value="25" <c:if test="${pgs==25}">selected</c:if>>25개</option>
@@ -101,17 +101,17 @@
   		<td class="text-right">
   		
   			<!-- 현재 페이지가 최대페이지를 넘어갈 경우 최대페이지로 변환 -->
-  			<c:if test="${pag>totPage}"><script>location.href="${ctp}/guList.gu?pag=${totPage}";</script></c:if>
+  			<c:if test="${pag>totPage}"><script>location.href="${ctp}/guList.gu?pag=${totPage}&pgs=${pgs}";</script></c:if>
   			
   			<!-- 첫페이지 / 이전페이지 / (현페이지번호/총페이지수) / 다음페이지 / 마지막페이지 -->
   			<c:if test="${pag > 1}">
-  				<a href="${ctp}/guList.gu?pag=1">[첫페이지]</a>
-  				<a href="${ctp}/guList.gu?pag=${pag-1}">[이전페이지]</a>
+  				<a href="${ctp}/guList.gu?pag=1&pgs=${pgs}">[첫페이지]</a>
+  				<a href="${ctp}/guList.gu?pag=${pag-1}&pgs=${pgs}">[이전페이지]</a>
   			</c:if>
   			${pag}/${totPage}
   			<c:if test="${pag < totPage}">
-  				<a href="${ctp}/guList.gu?pag=${pag+1}">[다음페이지]</a>
-  				<a href="${ctp}/guList.gu?pag=${totPage}">[마지막페이지]</a>
+  				<a href="${ctp}/guList.gu?pag=${pag+1}&pgs=${pgs}">[다음페이지]</a>
+  				<a href="${ctp}/guList.gu?pag=${totPage}&pgs=${pgs}">[마지막페이지]</a>
   			</c:if>
   		</td>
   	</tr>
@@ -120,10 +120,10 @@
   <div class="text-center">
 		<c:forEach begin="1" end="${totPage}" varStatus="st">
 			<c:if test="${pag eq st.count}">
-				<a href="${ctp}/guList.gu?pag=${st.count}" class="btn btn-warning" style="width: 40px">${st.count}</a>
+				<a href="${ctp}/guList.gu?pag=${st.count}&pgs=${pgs}" class="btn btn-warning" style="width: 40px">${st.count}</a>
 			</c:if>
 			<c:if test="${pag ne st.count}">
-				<a href="${ctp}/guList.gu?pag=${st.count}" class="btn btn-primary" style="width: 40px">${st.count}</a>
+				<a href="${ctp}/guList.gu?pag=${st.count}&pgs=${pgs}" class="btn btn-primary" style="width: 40px">${st.count}</a>
 			</c:if>
 		</c:forEach>
 	</div>
@@ -197,24 +197,24 @@
 	<div>
 		<ul class="pagination justify-content-center">
 				<c:if test="${pag > 1}">
-					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=1">첫페이지</a></li>
+					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=1&pgs=${pgs}">첫페이지</a></li>
 				</c:if>
 				<c:if test="${curBlock > 0}">
-					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li>
+					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${(curBlock-1)*blockSize + 1}&pgs=${pgs}">이전블록</a></li>
 				</c:if>
 			<c:forEach var="i" begin="${curBlock*blockSize + 1}" end="${curBlock*blockSize + blockSize}" varStatus="st">
 					<c:if test="${i <= totPage && i == pag}">
-						<li class="page-item active "><a class="page-link bg-secondary border-secondary" href="${ctp}/guList.gu?pag=${i}">${i}</a></li>
+						<li class="page-item active "><a class="page-link bg-secondary border-secondary" href="${ctp}/guList.gu?pag=${i}&pgs=${pgs}">${i}</a></li>
 					</c:if>
 					<c:if test="${i <= totPage && i != pag}">
-						<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${i}">${i}</a></li>
+						<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${i}&pgs=${pgs}">${i}</a></li>
 					</c:if>
 			</c:forEach>
 				<c:if test="${curBlock < lastBlock}">
-					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${(curBlock+1)*blockSize + 1}">다음블록</a></li>
+					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${(curBlock+1)*blockSize + 1}&pgs=${pgs}">다음블록</a></li>
 				</c:if>
 				<c:if test="${pag < totPage}">
-					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${totPage}">마지막페이지</a></li>
+					<li class="page-item"><a class="page-link text-secondary" href="${ctp}/guList.gu?pag=${totPage}&pgs=${pgs}">마지막페이지</a></li>
 				</c:if>
 		</ul>
 	</div>

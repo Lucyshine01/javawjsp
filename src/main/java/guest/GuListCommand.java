@@ -26,22 +26,21 @@ public class GuListCommand implements GuestInterface {
 		
 		// 2. 한 페이지의 분량을 결정한다.
 		
-		//int pageSize = request.getParameter("pageSize")==null ? 5 : Integer.parseInt(request.getParameter("pageSize"));
+		int pageSize = request.getParameter("pgs")==null ? 5 : Integer.parseInt(request.getParameter("pgs"));
 		
-		HttpSession session = request.getSession();
-		System.out.println("넘어온 pageSize값(Parameter) : "+request.getParameter("pageSize"));
-		String pgsTest = session.getAttribute("pgs")==null ? "null" : session.getAttribute("pgs").toString();
-		System.out.println("넘어온 pgs 세션값(Attribute) : " + pgsTest);
+//		System.out.println("넘어온 pageSize값(Parameter) : "+request.getParameter("pageSize"));
+//		String pgsTest = request.getAttribute("pgs")==null ? "null" : request.getAttribute("pgs").toString();
+//		System.out.println("넘어온 pgs 값(Attribute) : " + pgsTest);
 		
 		// 넘어온 select값이 있으면 select값으로 글 표시수 반영
 		// ,없을경우 기존 세션에 있는 pgs수로 글 표시수 반영
-		int pageSize;
-		if(request.getParameter("pageSize")==null) {
-			if(session.getAttribute("pgs")==null) pageSize = 5;
-			else pageSize = Integer.parseInt(session.getAttribute("pgs").toString());
-		}
-		else pageSize = Integer.parseInt(request.getParameter("pageSize"));
-		session.setAttribute("pgs", pageSize);
+//		int pageSize;
+//		if(request.getParameter("pageSize")==null) {
+//			if(request.getAttribute("pgs")==null) pageSize = 5;
+//			else pageSize = Integer.parseInt(request.getAttribute("pgs").toString());
+//		}
+//		else pageSize = Integer.parseInt(request.getParameter("pageSize"));
+//		request.setAttribute("pgs", pageSize);
 		
 		// 3. 총 레코드 건수를 구한다.
 		int totRecCnt = dao.totRecCnt();
@@ -72,6 +71,8 @@ public class GuListCommand implements GuestInterface {
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
+		
+		request.setAttribute("pgs", pageSize);
 		
 		request.setAttribute("pag", pag);
 		request.setAttribute("totPage", totPage);

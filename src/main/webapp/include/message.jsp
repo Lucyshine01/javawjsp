@@ -13,6 +13,7 @@
   	 
   	let msg = "${msg}";
   	let url = "${url}";
+  	let val = "${val}"
   	
   	if(msg == "guInputOk") msg = "방명록에 글이 등록되었습니다.";
   	else if(msg == "guInputNo") msg = "방명록에 글등록이 실패하였습니다!";
@@ -21,6 +22,10 @@
   	else if(msg == "adminLogoutOk") msg = "관리자님 로그아웃 되셨습니다.";
   	else if(msg == "guDeleteOk") msg = "해당 방명록 글이 삭제되었습니다.";
   	else if(msg == "guDeleteNo") msg = "방명록 글삭제가 완료되지못했습니다!";
+  	else if(msg == "loginOk") msg = val + "님 로그인되셨습니다.";
+  	else if(msg == "loginNo") msg = "아이디 혹은 비밀번호가 불일치합니다.";
+  	else if(msg == "memLogoutOk") msg = val + "님 로그아웃 되었습니다.";
+  	
   	
 		alert(msg);
 		if(url != "") location.href = url;
