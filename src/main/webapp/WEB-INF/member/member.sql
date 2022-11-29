@@ -13,7 +13,7 @@ create table member (
 	email varchar(50) not null,				/* 이메일(아이디/비밀번호 분실시 사용) */
 	homePage varchar(50) not null,		/* 홈페이지(블로그) 주소 */
 	job varchar(20),									/* 회원 직업 */
-	hobby varchar(20),								/* 회원 취미(2개이상은 '/'로 구분처리) */
+	hobby varchar(100),								/* 회원 취미(2개이상은 '/'로 구분처리) */
 	photo varchar(100) default 'noimage.jpg', /* 회원 사진 */
 	content text,											/* 회원 자기 소개 */
 	userInfor	char(6) default '공개',	/* 회원 정보 공개여부(공개/비공개) */
@@ -34,3 +34,6 @@ desc member;
 insert into member values (default,'admin','1234','관리맨','관리자',default,default,'010-2880-5451','충청북도 청주시 풍년로 56','saasdfhr@gmail.com','http://www.saasdfhr1234.com','프리랜서','등산/바둑',default,'관리자입니다.',default,default,default,0,default,default,default,default);
 
 select * from member;
+
+delete from member where mid = 'asdfasdf';
+update member set pwd = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4'  where mid = 'admin';

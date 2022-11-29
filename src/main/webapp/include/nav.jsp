@@ -19,15 +19,27 @@
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">BOARD</a>
 	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="#">PDS</a>
-	      </li>    
+	      <c:if test="${level != 1}">
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">PDS</a>
+		      </li>
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">STUDY</a>
+		        <div class="dropdown-menu">
+				      <a class="dropdown-item" href="${ctp}/pass.st">비밀번호암호화</a>
+				      <a class="dropdown-item" href="#">Link 2</a>
+				      <a class="dropdown-item" href="#">Link 3</a>
+				    </div>
+		      </li>
+	      </c:if>
 	      <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">STUDY</a>
+	      	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">My Page</a>
 	        <div class="dropdown-menu">
-			      <a class="dropdown-item" href="${ctp}/pass.st">비밀번호암호화</a>
-			      <a class="dropdown-item" href="#">Link 2</a>
-			      <a class="dropdown-item" href="#">Link 3</a>
+			      <a class="dropdown-item" href="${ctp}/memMain.mem">회원방</a>
+			      <c:if test="${level != 1}"><a class="dropdown-item" href="${ctp}/memList.mem">회원리스트</a></c:if>
+			      <a class="dropdown-item" href="${ctp}/memUpdatePwd.mem">비밀번호변경</a>
+			      <a class="dropdown-item" href="${ctp}/memPwdCheck.mem">회원정보변경</a>
+			      <a class="dropdown-item" href="${ctp}/memDelete.mem">회원탈퇴</a>
 			    </div>
 	      </li>
       </c:if>
@@ -37,7 +49,7 @@
       </li>  
       <li class="nav-item">
         <c:if test="${level > 4}"><a class="nav-link" href="${ctp}/memJoin.mem">Join</a></c:if>
-      </li>  
+      </li>
     </ul>
   </div>  
 </nav>

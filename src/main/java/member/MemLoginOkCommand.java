@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import conn.SecurityUtil;
+
 public class MemLoginOkCommand implements MemberInterface {
 
 	@Override
@@ -20,6 +22,10 @@ public class MemLoginOkCommand implements MemberInterface {
 		
 		MemberDAO dao = new MemberDAO();
 		MemberVO vo = dao.getLoginCheck(mid);
+		
+		//입력되어 넘오온 비밀번호를 암호화시킨후 DB에 저장된 pwd와 비교한다.
+		SecurityUtil security = new SecurityUtil();
+		pwd = security.encryptSHA256(pwd);
 		
 		// 비밀번호 비교
 		if(vo == null || !pwd.equals(vo.getPwd())) {

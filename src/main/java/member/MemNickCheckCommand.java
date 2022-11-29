@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MemNickNameCheckCommand implements MemberInterface {
+public class MemNickCheckCommand implements MemberInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -14,7 +14,7 @@ public class MemNickNameCheckCommand implements MemberInterface {
 		
 		MemberDAO dao = new MemberDAO();
 		int res = 1;
-		res = dao.getNickNameCheck(nickName);
+		res = dao.getNickCheck(nickName);
 		
 		if(res == 1) {	// 사용 가능한 닉네임
 			request.setAttribute("res", 1);

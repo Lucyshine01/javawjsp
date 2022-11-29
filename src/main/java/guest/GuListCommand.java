@@ -25,7 +25,6 @@ public class GuListCommand implements GuestInterface {
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		
 		// 2. 한 페이지의 분량을 결정한다.
-		
 		int pageSize = request.getParameter("pgs")==null ? 5 : Integer.parseInt(request.getParameter("pgs"));
 		
 //		System.out.println("넘어온 pageSize값(Parameter) : "+request.getParameter("pageSize"));

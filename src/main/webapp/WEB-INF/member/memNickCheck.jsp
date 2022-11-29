@@ -25,7 +25,7 @@
 		function sendCheck() {
 			opener.window.document.myform.nickName.value = '${nickName}';
 			opener.window.document.myform.nickNameCheck.value = 1;
-			
+			opener.nickChecksw = 1;
 			opener.window.document.getElementById("nickNameCheck_label").style.visibility = "hidden";
 			opener.window.document.myform.name.focus();
 			window.close();

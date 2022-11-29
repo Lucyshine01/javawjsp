@@ -12,7 +12,7 @@ public class MemLogoutCommand implements MemberInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String nickName = session.getAttribute("sNickName").toString();
+		String nickName = session.getAttribute("sNickName").toString()==null? "" : session.getAttribute("sNickName").toString();
 		session.invalidate();
 		
 		request.setAttribute("msg", "memLogoutOk");
