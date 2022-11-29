@@ -1,6 +1,7 @@
 <%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -70,10 +71,6 @@
 				let tel1 = myform.tel1.value;
 				let tel2 = myform.tel2.value;
 				let tel3 = myform.tel3.value;
-				if(tel2.trim() == "" || tel3.trim() == "") {
-					tel2 = " ";
-					tel3 = " ";
-				}
 				let tel = tel1 + "-" + tel2 + "-" + tel3;
 				myform.tel.value = tel;
 				
@@ -301,6 +298,38 @@
     <div class="form-group">
       <div class="form-check-inline">
         <span class="input-group-text">취미</span> &nbsp; &nbsp;
+			</div>
+			<c:set var="strhobby" value="${fn:split(hobby,'/')}" />
+			<c:forEach var="hob" items="${hobbys}" varStatus="st">
+				<div class="form-check-inline">
+			  	<label class="form-check-label">
+			    	<input type="checkbox" class="form-check-input" 
+				    	<c:forEach var="temp" items="${strhobby}">
+				    		<c:if test="${temp == hob}">checked</c:if>
+				    	</c:forEach>
+			    	value="${hob}" name="hobby"/>${hob}
+			  	</label>
+				</div>
+			</c:forEach>
+			
+			<!-- ${hobby.contains('a')} 나 ${fn:contains(hobby,'a')} 를 사용한 방법
+			(문자열 속에서 해당 문자가 있는지 없는지 파악=> ture || false )-->
+			<%-- 
+			<div class="form-check-inline">
+				<label class="form-check-label">
+		    	<input type="checkbox" class="form-check-input" value="${hob}" <c:if test="${hobby.contains('축구')}">checked</c:if> name="hobby"/>축구
+		  	</label>
+			</div>
+			 --%>
+			<%-- 
+			<div class="form-check-inline">
+				<label class="form-check-label">
+		    	<input type="checkbox" class="form-check-input" value="${hob}" <c:if test="${fn:contains(hobby,'축구')}">checked</c:if> name="hobby"/>축구
+		  	</label>
+			</div>
+			 --%>
+			<!-- 
+			<div class="form-check-inline">
 			  <label class="form-check-label">
 			    <input type="checkbox" class="form-check-input" value="등산" name="hobby"/>등산
 			  </label>
@@ -340,6 +369,7 @@
 			    <input type="checkbox" class="form-check-input" value="기타" name="hobby" checked/>기타
 			  </label>
 			</div>
+			 -->
     </div>
     <div class="form-group">
       <label for="content">자기소개</label>

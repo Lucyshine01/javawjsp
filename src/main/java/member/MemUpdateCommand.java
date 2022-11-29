@@ -38,6 +38,8 @@ public class MemUpdateCommand implements MemberInterface {
 		
 		// 취미 분리("/")
 		request.setAttribute("hobby", vo.getHobby());
+		String[] hobbys = {"등산","낚시","수영","독서","영화감상","바둑","축구","기타"};
+		request.setAttribute("hobbys", hobbys);
 		
 		// 생일(년-월-일) : 앞에서부터 1자리를 넘긴다.
 		request.setAttribute("birthday", vo.getBirthday().substring(0,10));

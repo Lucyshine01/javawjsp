@@ -42,5 +42,4 @@ public class MemListCommand implements MemberInterface {
 		request.setAttribute("curScrStartNo", curScrStartNo);
 		
 	}
-
 }
