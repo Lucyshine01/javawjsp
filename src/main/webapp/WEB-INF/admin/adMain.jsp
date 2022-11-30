@@ -7,13 +7,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>adMian.jsp</title>
-  <frameset cols="130px, *">
+	<frameset cols="500px, *">
   	<frame src="${ctp}/adLeft.ad" name="adLeft" frameborder="0"/>
   	<frame src="${ctp}/adContent.ad" name="adContent" frameborder="0"/>
   </frameset>
   <script></script>
   <style></style>
 </head>
-<body>
-</body>
 </html>

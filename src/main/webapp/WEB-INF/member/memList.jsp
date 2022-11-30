@@ -44,12 +44,12 @@
   <br/>
   <form name="myform" method="post" action="${ctp}/memMemberSearch.mem">
   	<div class="row">
-  		<div class="col text-left"><button type="button" onclick="location.href='${ctp}/memList.mem'" class="btn btn-secondary m-2" >전체검색</button></div>
-  		<div class="col form-inline">
-  			<input type="text" name="mid" class="form-control m-2" autofocus/>
+  		<div class="col-3 text-left"><button type="button" onclick="location.href='${ctp}/memList.mem'" class="btn btn-secondary m-2" >전체검색</button></div>
+  		<div class="col-5 form-inline float-right">
+  			<input type="text" name="mid" class="form-control m-2" autofocus >
   			<input type="button" value="아이디개별검색" onclick="midSearch();" class="btn btn-secondary m-2" />
   		</div>
-  		<div class="col form-inline">
+  		<div class="col-4 form-inline">
   			<input type="text" name="temp" class="form-control m-2" autofocus/>
   			<input type="button" value="일반검색" onclick="search();" class="btn btn-secondary m-2" />
   		</div>

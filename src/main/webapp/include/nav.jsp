@@ -6,14 +6,6 @@
 	pageContext.setAttribute("level", level);
 %>
 <script>
-	'use strict';
-	function memberDel() {
-		let ans = confirm("정말로 탈퇴하시겠습니까?");
-		if(ans) {
-			ans = confirm("탈퇴후 1개월간은 같은아이디로 가입하실수 없습니다.\n탈퇴 하시겠습니까?");
-			if(ans) location.href="${ctp}/memDelete.mem";
-		}
-	}
 </script>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <a class="navbar-brand" href="http://192.168.50.79:9090/javawjsp/">Home</a>
@@ -49,7 +41,7 @@
 			      <c:if test="${level != 1}"><a class="dropdown-item" href="${ctp}/memList.mem">회원리스트</a></c:if>
 			      <a class="dropdown-item" href="${ctp}/memUpdatePwd.mem">비밀번호변경</a>
 			      <a class="dropdown-item" href="${ctp}/memPwdCheck.mem">회원정보변경</a>
-			      <a class="dropdown-item" href="javascript:memberDel()">회원탈퇴</a>
+			      <a class="dropdown-item" href="${ctp}/memDelete.mem">회원탈퇴</a>
 			      <c:if test="${level == 0}"><a class="dropdown-item" href="${ctp}/adMain.ad">관리자</a></c:if>
 			    </div>
 	      </li>

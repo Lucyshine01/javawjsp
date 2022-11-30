@@ -37,3 +37,5 @@ select * from member;
 
 delete from member where mid = 'asdfasdf';
 update member set pwd = '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4'  where mid = 'admin';
+
+select * from member where (mid like '%a%' or nickName like '%a%' and name like '%a%' and gender like '%a%') and userInfor = '공개' order by idx desc;

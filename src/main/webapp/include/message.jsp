@@ -37,6 +37,7 @@
   	else if(msg == "memUpdateNo") msg = "회원정보 변경실패!!";
   	else if(msg == "levelCheckOk") msg = "회원 등급이 변경처리 되었습니다.";
   	else if(msg == "memberDelOk") msg = "정상적으로 회원탈퇴 되셨습니다.";
+  	else if(msg == "memberDelNo") msg = "비밀번호가 불일치합니다! 탈퇴실패";
   	else if(msg == "loginNoUserDel") msg = "탈퇴된 계정입니다.\n다른 계정으로 로그인해주세요.";
   	else if(msg == "delMemberOk") msg = "탈퇴처리 되었습니다.";
   	else if(msg == "sessionOver") msg = "세션이 만료되었습니다.";
