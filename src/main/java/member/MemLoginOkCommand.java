@@ -27,6 +27,12 @@ public class MemLoginOkCommand implements MemberInterface {
 		SecurityUtil security = new SecurityUtil();
 		pwd = security.encryptSHA256(pwd);
 		
+		if(vo.getUserDel().equals("OK")) {
+			request.setAttribute("msg", "loginNoUserDel");
+			request.setAttribute("url", request.getContextPath()+"/memLogin.mem");
+			return;
+		}
+		
 		// 비밀번호 비교
 		if(vo == null || !pwd.equals(vo.getPwd())) {
 			request.setAttribute("msg", "loginNo");

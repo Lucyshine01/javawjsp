@@ -312,6 +312,14 @@
 				</div>
 			</c:forEach>
 			
+			<!-- 선생님방식(취미:체크박스 처리) -->
+			<%-- 
+			<c:set var="varHobbys" value="${fn:split('등산/낚시/수영/독서/영화감상/바둑/축구/기타','/')}"/>
+	    <c:forEach var="tempHobby" items="${varHobbys}" varStatus="st"> &nbsp; &nbsp;
+	      <input type="checkbox" class="form-check-input" value="${tempHobby}" name="hobby" <c:if test="${fn:contains(hobby,varHobbys[st.index])}">checked</c:if>/>${tempHobby} &nbsp;
+	    </c:forEach>
+	     --%>
+	    
 			<!-- ${hobby.contains('a')} 나 ${fn:contains(hobby,'a')} 를 사용한 방법
 			(문자열 속에서 해당 문자가 있는지 없는지 파악=> ture || false )-->
 			<%-- 

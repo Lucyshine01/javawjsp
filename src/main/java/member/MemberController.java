@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("*.mem")
 public class MemberController extends HttpServlet {
@@ -18,6 +19,17 @@ public class MemberController extends HttpServlet {
 		
 		String uri = request.getRequestURI();
 		String cmd = uri.substring(uri.lastIndexOf("/"), uri.lastIndexOf("."));
+		
+//		//세견이 끊겼다면 작업의 진행을 중지시키고 홈으로 전송시켜준다.
+//		HttpSession session = request.getSession();
+//		int level = session.getAttribute("sLevel")==null ? 99 : (int)session.getAttribute("sLevel");
+//		if (level >= 5 && !cmd.equals("/memLogin") && !cmd.equals("/memLoginOk")) {
+//			request.setAttribute("msg", "sessionOver");
+//			request.setAttribute("url", request.getContextPath()+"/");
+//			RequestDispatcher dispatcher = request.getRequestDispatcher("/include/message.jsp");
+//			dispatcher.forward(request, response);
+//		}
+		
 		
 		if(cmd.equals("/memLogin")) {
 			viewPage += "/memLogin.jsp";
@@ -88,6 +100,16 @@ public class MemberController extends HttpServlet {
 		}
 		else if(cmd.equals("/memUpdateOk")) {
 			command = new MemUpdateOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(cmd.equals("/memMemberSearch")) {
+			command = new MemSearchCommand();
+			command.execute(request, response);
+			viewPage += "/memList.jsp";
+		}
+		else if(cmd.equals("/memDelete")) {
+			command = new MemDeleteCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
