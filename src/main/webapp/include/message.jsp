@@ -40,6 +40,8 @@
   	else if(msg == "loginNoUserDel") msg = "탈퇴된 계정입니다.\n다른 계정으로 로그인해주세요.";
   	else if(msg == "delMemberOk") msg = "탈퇴처리 되었습니다.";
   	else if(msg == "sessionOver") msg = "세션이 만료되었습니다.";
+  	else if(msg == "boInputOk") msg = "게시글이 정상 등록되었습니다.";
+  	else if(msg == "boInputNo") msg = "게시글 등록이 처리되지 못했습니다.";
   	
 		alert(msg);
 		if(url != "") location.href = url;

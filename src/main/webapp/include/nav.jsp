@@ -27,7 +27,7 @@
       </li>
       <c:if test="${level <= 4}">
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">BOARD</a>
+	        <a class="nav-link" href="${ctp}/boList.bo">BOARD</a>
 	      </li>
 	      <c:if test="${level != 1}">
 		      <li class="nav-item">
