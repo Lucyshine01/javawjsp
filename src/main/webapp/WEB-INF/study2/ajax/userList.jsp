@@ -27,6 +27,8 @@
   		});
 		}
   	function userDel(mid) {
+  		let ans = confirm('정말로 삭제하시겠습니까?');
+  		if(ans != true) return;
   		$.ajax({
   			type: "post",
   			url: "${ctp}/userDel.st",
@@ -42,6 +44,79 @@
 				},
   			error:function() {
 					alert("유저 조회 실패!");
+				}
+  		});
+		}
+  	function userInput() {
+  		let mid = document.getElementById("mid").value;
+  		let name = document.getElementById("name").value;
+  		let age = document.getElementById("age").value;
+  		let address = document.getElementById("address").value;
+  		let query = {
+				mid: mid,
+				name: name,
+				age: age,
+				address: address
+			}
+  		$.ajax({
+  			type: "post",
+  			url: "${ctp}/userInput.st",
+  			data: query,
+  			success:function(res) {
+  				if(res == '1'){
+	  				alert("등록완료!");
+	  				location.reload();
+  				}
+  				else if(res == '0'){
+	  				alert("등록실패!! 중복된 아이디가 있습니다!");
+  				}
+  				else{
+	  				alert("등록실패!! 서버오류로 인해 취소되었습니다!");
+  				}
+				},
+  			error:function() {
+					alert("등록 실패!");
+				}
+  		});
+		}
+  	
+  	function userUpdate() {
+  		let oldMid = prompt('변경할 유저의 기존 아이디를 입력하세요');
+  		let mid = document.getElementById("mid").value;
+  		let name = document.getElementById("name").value;
+  		let age = document.getElementById("age").value;
+  		let address = document.getElementById("address").value;
+  		if(oldMid == null) return;
+  		let query = {
+  			oldMid: oldMid,
+				mid: mid,
+				name: name,
+				age: age,
+				address: address
+			}
+  		$.ajax({
+  			type: "post",
+  			url: "${ctp}/userUpdate.st",
+  			data: query,
+  			contextType: "application/json",
+			  charset : "utf-8",
+  			success:function(res) {
+  				if(res == '1'){
+	  				alert("수정완료!");
+	  				location.reload();
+  				}
+  				else if(res == '0'){
+	  				alert("수정실패!! 해당 아이디가 존재하지않습니다!");
+  				}
+  				else if(res == '2'){
+	  				alert("수정실패!! 수정할 아이디가 이미 존재합니다!");
+  				}
+  				else{
+	  				alert("수정실패!! 서버오류로 인해 취소되었습니다!");
+  				}
+				},
+  			error:function() {
+					alert("수정 실패!");
 				}
   		});
 		}

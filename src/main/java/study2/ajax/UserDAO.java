@@ -45,13 +45,13 @@ public class UserDAO {
 	
 	// user 개별조회 검색
 	public UserVO getUserSearch(String mid) {
+		vo = new UserVO();
 		try {
 			sql = "select * from user where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				vo = new UserVO();
 				vo.setIdx(rs.getInt("idx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setName(rs.getString("name"));
@@ -82,7 +82,45 @@ public class UserDAO {
 		}
 		return res;
 	}
-
 	
+	// user 등록
+	public int setUserInput(String mid, String name, int age, String address) {
+		int res = 0;
+		try {
+			sql = "insert into user values(default,?,?,?,?);";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, name);
+			pstmt.setInt(3, age);
+			pstmt.setString(4, address);
+			pstmt.executeUpdate();
+			res = 1;
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
 	
+	// user 수정
+	public int setUserUpdate(String mid, String name, int age, String address, String oldMid) {
+		int res = 0;
+		try {
+			sql = "update user set mid=?,name=?,age=?,address=? where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, name);
+			pstmt.setInt(3, age);
+			pstmt.setString(4, address);
+			pstmt.setString(5, oldMid);
+			pstmt.executeUpdate();
+			res = 1;
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
 }

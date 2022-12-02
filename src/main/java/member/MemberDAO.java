@@ -315,11 +315,12 @@ public class MemberDAO {
 		return vos;
 	}
 	
+	// 회원 자료 일반 검색
 	public ArrayList<MemberVO> getMemberSearch2(String temp, int level) {
 		ArrayList<MemberVO> vos = new ArrayList<>();
 		try {
 			if(level != 0) {
-				sql = "select * from member where mid like ? or nickName like ? or name like ? or gender like ? and userInfor = '공개' order by idx desc";
+				sql = "select * from member where (mid like ? or nickName like ? or name like ? or gender like ?) and userInfor = '공개' order by idx desc";
 			}
 			else {
 				sql = "select * from member where mid like ? or nickName like ? or name like ? or gender like ? order by idx desc";
