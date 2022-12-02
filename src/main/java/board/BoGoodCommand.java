@@ -35,6 +35,7 @@ public class BoGoodCommand implements BoardInterface {
 				dao.setBoGood(idx, res);
 			}
 		}
+		
 //		dao.setBoGood(idx);
 		return;
 	}
