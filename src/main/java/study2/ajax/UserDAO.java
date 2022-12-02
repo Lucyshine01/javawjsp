@@ -82,8 +82,8 @@ public class UserDAO {
 		}
 		return res;
 	}
-	
-	// user 등록
+
+//user 등록
 	public int setUserInput(String mid, String name, int age, String address) {
 		int res = 0;
 		try {
@@ -102,7 +102,7 @@ public class UserDAO {
 		}
 		return res;
 	}
-	
+
 	// user 수정
 	public int setUserUpdate(String mid, String name, int age, String address, String oldMid) {
 		int res = 0;
@@ -123,4 +123,5 @@ public class UserDAO {
 		}
 		return res;
 	}
+	
 }

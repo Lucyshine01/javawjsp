@@ -61,16 +61,7 @@ public class StudyController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
-		else if(cmd.equals("/userInput")) {
-			command = new UserInputCommand();
-			command.execute(request, response);
-			return;
-		}
-		else if(cmd.equals("/userUpdate")) {
-			command = new UserUpdateCommand();
-			command.execute(request, response);
-			return;
-		}
+		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

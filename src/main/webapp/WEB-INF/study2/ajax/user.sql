@@ -20,6 +20,5 @@ insert into user values (default, 'onr1234', '오나라', 39, '광주');
 
 select * from user;
 select * from user order by idx desc;
-select * from user where mid = 'lkj12341234';
 
 

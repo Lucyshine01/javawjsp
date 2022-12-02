@@ -115,10 +115,7 @@ public class MemberController extends HttpServlet {
 			viewPage += "/memList.jsp";
 		}
 		else if(cmd.equals("/memDelete")) {
-			viewPage += "/memDelPass.jsp";
-		}
-		else if(cmd.equals("/memDeleteOk")) {
-			command = new MemDeleteOkCommand();
+			command = new MemDeleteCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
