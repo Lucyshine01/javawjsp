@@ -56,6 +56,36 @@ public class BoardController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
+		else if(cmd.equals("/boDeleteOk")) {
+			command = new BoDeleteOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(cmd.equals("/boUpdate")) {
+			command = new BoUpdateCommand();
+			command.execute(request, response);
+			viewPage += "/boUpdate.jsp";
+		}
+		else if(cmd.equals("/boUpdateOk")) {
+			command = new BoUpdateOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(cmd.equals("/boSearch")) {
+			command = new BoSearchCommand();
+			command.execute(request, response);
+			viewPage += "/boSearch.jsp";
+		}
+		else if(cmd.equals("/boReplyInput")) {
+			command = new BoReplyInputCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(cmd.equals("/boReplyDeleteOk")) {
+			command = new BoReplyDeleteOkCommand();
+			command.execute(request, response);
+			return;
+		}
 		
 //		else if(cmd.equals("/memLogout")) {
 //			command = new MemLogoutCommand();

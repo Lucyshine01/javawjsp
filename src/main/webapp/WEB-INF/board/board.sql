@@ -15,8 +15,6 @@ create table board (
 	primary key(idx)
 );
 
-
-
 ALTER TABLE board ADD goodId text;
 alter table board drop goodId;
 
@@ -25,6 +23,25 @@ desc board;
 insert into board values (default,'관리맨','게시판 서비스를 시작합니다.','saasdfhr@gmail.com','http://www.saasdfhr1234.com','이곳은 게시판입니다.',default,'192.168.50.79',default,default,'admin');
 
 select * from board;
+
+/* 게시판에 댓글 달기 */
+create table boardReply (
+	idx int not null auto_increment, 	/* 댓글의 고유번호 */
+	boardIdx int not null,					 	/* 원본글의 고유번호(외래키로 지정) */
+	mid varchar(20) not null,					/* 댓글 올린이의 아이디 */
+	nickName varchar(20) not null,		/* 댓글 올린이의 닉네임 */
+	wDate datetime default now(),			/* 댓글 올린 날짜 */
+	hostIp varchar(50) not null,			/* 댓글 올린 PC의 Ip */
+	content text not null,						/* 댓글 내용 */
+	primary key(idx),
+	foreign key(boardIdx) references board(idx)
+	/* on update cascade  부모키에 따라서 같이 업데이트 */
+	/*	on delete restrict 부모키를 삭제하려하는 것 제약 */
+);
+
+desc boardReply;
+
+
 
 /* 날짜함수 처리 연습 */
 select now(); -- now() : 오늘 날짜와 시간을 보여준다.
@@ -113,6 +130,10 @@ select timestampdiff(hour, wDate, now()) from board;
 select *,timestampdiff(hour, wDate, now()) as hour_diff from board;
 select *,datediff(now(), wDate) as day_diff, timestampdiff(hour, wDate, now()) as hour_diff from board;
 
-
-
+/* 이전글 다음글 체크 */
+/* idx로 이전글 가져오기(rs.next 한번씩해서 가져오기) limit로 꼭 한건만 가져오기 */
+select * from board where idx < 5 order by idx desc limit 1;
+/* idx로 다음글 가져오기 */
+select * from board where idx > 5 limit 1;
+select * from board;
 

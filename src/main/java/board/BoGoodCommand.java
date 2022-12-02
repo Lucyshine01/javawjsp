@@ -14,30 +14,28 @@ public class BoGoodCommand implements BoardInterface {
 		int idx = Integer.parseInt(request.getParameter("idx"));
 		BoardDAO dao = new BoardDAO();
 		HttpSession session = request.getSession();
-		if(session.getAttribute("sBo")==null) {
-			session.setAttribute("sBo", String.valueOf(idx)+"/");
+		if(session.getAttribute("sGood") == null) {
+			session.setAttribute("sGood", "board"+idx+"/");
 			dao.setBoGood(idx, 0);
 		}
 		else {
-			String sBo = (String) session.getAttribute("sBo");
+			String sBo = (String)session.getAttribute("sGood");
 			String[] BoIdx = sBo.split("/");
 			int res=0;
 			for(int i=0; i<BoIdx.length; i++)
-				if(BoIdx[i].equals(String.valueOf(idx))) res=1;
+				if(BoIdx[i].equals("board"+String.valueOf(idx))) res=1;
 			if(res == 0) {
-				sBo = sBo + idx + "/";
-				session.setAttribute("sBo",sBo);
+				sBo = sBo + "board" + idx + "/";
+				session.setAttribute("sGood",sBo);
 				dao.setBoGood(idx, res);
 			}
 			else {
-				sBo = sBo.replace(idx+"/", "");
-				session.setAttribute("sBo",sBo);
+				sBo = sBo.replace("board"+idx+"/", "");
+				session.setAttribute("sGood",sBo);
 				dao.setBoGood(idx, res);
 			}
 		}
-		
 //		dao.setBoGood(idx);
-		return;
 	}
 
 }

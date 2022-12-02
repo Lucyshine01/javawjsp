@@ -18,7 +18,7 @@
   	function searchCheck() {
 			let searchString = $("#searchString").val();
 			
-			if(searchString.trim() == "") {
+			if(searchString.trim() == ""){
 				alert("검색어를 입력해주세요!");
 				searchForm.searchString.focus();
 			}
@@ -33,7 +33,10 @@
 <jsp:include page="/include/header.jsp"/>
 <p><br/></p>
 <div class="container">
-  <h2 class="text-center">게 시 판 리 스 트</h2>
+  <h2 class="text-center">게 시 판 조 건 검 색 리 스 트</h2>
+  <div class="text-center">
+  	(<font color="blue">${searchTitle}</font>(으)로 <font color="red">${searchString}</font>(을)를 검색한 결과 ${searchCount}건이 검색되었습니다.)
+  </div>
   <br/>
   <table class="table table-borderless">
   	<tr>
@@ -59,63 +62,31 @@
   	</tr>
   	<c:forEach var="vo" items="${vos}">
   		<tr>
-  			<td>${curScrStartNo}</td>
-  			<td class="text-left"><a href="${ctp}/boContent.bo?idx=${vo.idx}&pageSize=${pageSize}&pag=${pag}">${vo.title}</a><c:if test="${vo.hour_diff < 24}"><img src="${ctp}/images/new.gif"/></c:if></td>
+  			<td>${searchCount}</td>
+  			<td class="text-left"><a href="${ctp}/boContent.bo?flag=search&search=${search}&searchString=${searchString}&idx=${vo.idx}&pageSize=${pageSize}&pag=${pag}">${vo.title}</a><c:if test="${vo.hour_diff < 24}"><img src="${ctp}/images/new.gif"/></c:if></td>
   			<td>${vo.nickName}</td>
-  			<td>
-  				<c:if test="${vo.hour_diff < 24}">
-  					<c:if test="${vo.hour_diff == 0}">방금 전</c:if>
-  					<c:if test="${vo.hour_diff > 0}">${vo.hour_diff}시간 전</c:if>
-  				</c:if>
-  				<c:if test="${vo.hour_diff >= 24}">
-	  				<c:if test="${0 <= vo.day_diff && vo.day_diff <= 10}">${vo.day_diff}일 전</c:if>
-	  				<c:if test="${10 < vo.day_diff && vo.day_diff <= 31}">${fn:substring(vo.wDate,0,10)}</c:if>
-	  				<c:if test="${31 < vo.day_diff}">${fn:substring(vo.wDate,0,10)}</c:if>
-  				</c:if>
-  			</td>
+  			<td>${fn:substring(wDate,0,16)}</td>
   			<td>${vo.readNum}</td>
   			<td>${vo.good}</td>
   		</tr>
-  		<c:set var="curScrStartNo" value="${curScrStartNo-1}"/>
+  		<c:set var="searchCount" value="${searchCount-1}"/>
   		<tr><td colspan="6" class="m-0 p-0"></td></tr>
   	</c:forEach>
   </table>
-  <!-- 블록 페이지 시작 -->
-	<div class="text-center">
-	  <ul class="pagination justify-content-center">
-	    <c:if test="${pag > 1}">
-	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/boList.bo?pageSize=${pageSize}&pag=1">첫페이지</a></li>
-	    </c:if>
-	    <c:if test="${curBlock > 0}">
-	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/boList.bo?pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li>
-	    </c:if>
-	    <c:forEach var="i" begin="${(curBlock)*blockSize + 1}" end="${(curBlock)*blockSize + blockSize}" varStatus="st">
-	      <c:if test="${i <= totPage && i == pag}">
-	    		<li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/boList.bo?pageSize=${pageSize}&pag=${i}">${i}</a></li>
-	    	</c:if>
-	      <c:if test="${i <= totPage && i != pag}">
-	    		<li class="page-item"><a class="page-link text-secondary" href="${ctp}/boList.bo?pageSize=${pageSize}&pag=${i}">${i}</a></li>
-	    	</c:if>
-	    </c:forEach>
-	    <c:if test="${curBlock < lastBlock}">
-	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/boList.bo?pageSize=${pageSize}&pag=${(curBlock+1)*blockSize + 1}">다음블록</a></li>
-	    </c:if>
-	    <c:if test="${pag < totPage}">
-	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/boList.bo?pageSize=${pageSize}&pag=${totPage}">마지막페이지</a></li>
-	    </c:if>
-	  </ul>
-	</div>
-	<!-- 블록 페이지 끝 -->
 	<br/>
+	<div>
+		<a href="${ctp}/boList.bo?pag=${pag}&pageSize=${pageSize}" class="btn btn-secondary">돌아가기</a>
+	</div>
+	<%-- 
 	<!-- 검색기 처리 시작 -->
 	<div class="container">
 		<form name="searchForm" method="post" action="${ctp}/boSearch.bo">
 			<b>검색 : </b>
 			<select name="search">
-				<option value="title-content">제목 + 내용</option>
-				<option value="title">제목</option>
-				<option value="nickName">닉네임</option>
-				<option value="content">내용</option>
+				<option ${search=='title-content' ? 'selected' : '' } selected value="title-content">제목 + 내용</option>
+				<option ${search=='title' ? 'selected' : '' } value="title">제목</option>
+				<option ${search=='nickName' ? 'selected' : '' } value="nickName">닉네임</option>
+				<option ${search=='content' ? 'selected' : '' } value="content">내용</option>
 			</select>
 			<input type="text" name="searchString" id="searchString"/>
 			<input type="button" value="검색" onclick="searchCheck()" class="btn btn-secondary btn-sm" />
@@ -124,6 +95,7 @@
 		</form>
 	</div>
 	<!-- 검색기 처리 끝 -->
+	 --%>
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>

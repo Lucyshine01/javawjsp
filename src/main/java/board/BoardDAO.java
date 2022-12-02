@@ -173,5 +173,181 @@ public class BoardDAO {
 		}
 	}
 
+	// 게시글 삭제처리
+	public int setBoDeleteOK(int idx) {
+		int res = 0;
+		try {
+			sql = "delete from board where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+			res = 1;
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
+
+	//게시글 업데이트
+	public int setBoUpdate(BoardVO vo) {
+		int res = 0;
+		try {
+			sql = "update board set title=?, email=?, homePage=?, content=?, hostIp=? where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getEmail());
+			pstmt.setString(3, vo.getHomePage());
+			pstmt.setString(4, vo.getContent());
+			pstmt.setString(5, vo.getHostIp());
+			pstmt.setInt(6, vo.getIdx());
+			pstmt.executeUpdate();
+			res = 1;
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
+
+	// 이전글/ 다음글에 필요한 내용 검색 처리
+	public BoardVO getPreNextSearch(String str, int idx) {
+		vo = new BoardVO();
+		try {
+			if(str.equals("pre"))
+				sql = "select * from board where idx < ? order by idx desc limit 1";
+			else
+				sql = "select * from board where idx > ? limit 1";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			rs = pstmt.executeQuery();
+			if(str.equals("pre") && rs.next()) {
+				vo.setPreIdx(rs.getInt("idx"));
+				vo.setPreTitle(rs.getString("title"));
+			}
+			else if(str.equals("next") && rs.next()){
+				vo.setNextIdx(rs.getInt("idx"));
+				vo.setNextTitle(rs.getString("title"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vo;
+	}
+
+
+	public ArrayList<BoardVO> getBoContentSearch(String search, String searchString) {
+		ArrayList<BoardVO> vos = new ArrayList<>();
+		int searchPoint = 1;
+		try {
+			if(search.equals("title-content")) {
+				sql = "select * from board where title like ? or content like ?";
+				searchPoint = 2;
+			}
+			else {
+				sql = "select * from board where "+search+" like ?";
+			}
+			pstmt = conn.prepareStatement(sql);
+			if(searchPoint > 1) {
+				for(int i=1; i<=searchPoint; i++) {
+					pstmt.setString(i, "%"+searchString+"%");
+				}
+			}
+			else {
+				pstmt.setString(1, "%"+searchString+"%");
+			}
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new BoardVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setTitle(rs.getString("title"));
+				vo.setEmail(rs.getString("email"));
+				vo.setHomePage(rs.getString("homePage"));
+				vo.setContent(rs.getString("content"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setReadNum(rs.getInt("readNum"));
+				vo.setGood(rs.getInt("good"));
+				vo.setMid(rs.getString("mid"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vos;
+	}
+
+	// 댓글 입력하기
+	public String setReplyInputOk(BoardReplyVO replyVo) {
+		String res = "0";
+		try {
+			sql = "insert into boardReply values (default,?,?,?,default,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyVo.getBoardIdx());
+			pstmt.setString(2, replyVo.getMid());
+			pstmt.setString(3, replyVo.getNickName());
+			pstmt.setString(4, replyVo.getHostIp());
+			pstmt.setString(5, replyVo.getContent());
+			pstmt.executeUpdate();
+			res = "1";
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
+
+	// 댓글 가져오기
+	public ArrayList<BoardReplyVO> getBoReply(int idx) {
+		ArrayList<BoardReplyVO> replyVos = new ArrayList<>();
+		try {
+			sql = "select * from boardReply where boardIdx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BoardReplyVO replyVo = new BoardReplyVO();
+				replyVo.setIdx(rs.getInt("idx"));
+				replyVo.setBoardIdx(idx);
+				replyVo.setMid(rs.getString("mid"));
+				replyVo.setNickName(rs.getString("nickName"));
+				replyVo.setwDate(rs.getString("wDate"));;
+				replyVo.setHostIp(rs.getString("hostIp"));
+				replyVo.setContent(rs.getString("content"));
+				replyVos.add(replyVo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return replyVos;
+	}
+
+	// 댓글 삭제하기
+	public String setBoReplyDeleteOK(int idx) {
+		String res = "0";
+		try {
+			sql = "delete from boardReply where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+			res = "1";
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
 	
 }

@@ -43,6 +43,11 @@
   	else if(msg == "sessionOver") msg = "세션이 만료되었습니다.";
   	else if(msg == "boInputOk") msg = "게시글이 정상 등록되었습니다.";
   	else if(msg == "boInputNo") msg = "게시글 등록이 처리되지 못했습니다.";
+  	else if(msg == "boDeleteOk") msg = "게시글이 삭제 처리되었습니다.";
+  	else if(msg == "boDeleteNo") msg = "게시글이 삭제되지 못했습니다.";
+  	else if(msg == "userCheckNo") msg = "비정상적인 접근입니다.";
+  	else if(msg == "boUpdateOk") msg = "게시글이 수정되었습니다.";
+  	else if(msg == "boUpdateNo") msg = "게시글이 수정처리에 실패했습니다.";
   	
 		alert(msg);
 		if(url != "") location.href = url;
