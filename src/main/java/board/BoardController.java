@@ -74,7 +74,7 @@ public class BoardController extends HttpServlet {
 		else if(cmd.equals("/boSearch")) {
 			command = new BoSearchCommand();
 			command.execute(request, response);
-			viewPage += "/boSearch.jsp";
+			viewPage += "/boList.jsp";
 		}
 		else if(cmd.equals("/boReplyInput")) {
 			command = new BoReplyInputCommand();

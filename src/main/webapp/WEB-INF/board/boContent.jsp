@@ -10,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>boContent.jsp</title>
   <jsp:include page="/include/bs4.jsp"></jsp:include>
+  <script src="https://kit.fontawesome.com/368f95b037.js" crossorigin="anonymous"></script>
   <script>
   	'use strict'
   	function goodCheck() {
@@ -155,22 +156,27 @@
   		</td>
   	</tr>
   </table>
-  
-  <c:if test="${flag != 'search'}">
+  <%-- <c:if test="${flag != 'search'}"> --%>
 	  <!-- 이전글/다음글 처리 -->
 	  <table class="table table-borderless">
 		  <tr>
-		  	<td>
+	  		<td style="font-size: 1.1em">
 		  		<c:if test="${nextVo.nextIdx != 0}">
-		  			👉<a href="${ctp}/boContent.bo?idx=${nextVo.nextIdx}&pageSize=${pageSize}&pag=${pag}">다음글 : ${nextVo.nextTitle}</a><br/>
+		  			<a href="${ctp}/boContent.bo?idx=${nextVo.nextIdx}&pageSize=${pageSize}&pag=${pag}">
+		  				<i class="fa-solid fa-arrow-up"></i> 다음글 : ${nextVo.nextTitle}
+		  			</a>
 		  		</c:if>
+		  		<br/>
 		  		<c:if test="${preVo.preIdx != 0}">
-		  			👈<a href="${ctp}/boContent.bo?idx=${preVo.preIdx}&pageSize=${pageSize}&pag=${pag}">이전글 : ${preVo.preTitle}</a><br/>
+		  			<a href="${ctp}/boContent.bo?idx=${preVo.preIdx}&pageSize=${pageSize}&pag=${pag}">
+		  				<i class="fa-solid fa-arrow-down"></i> 이전글 : ${preVo.preTitle}
+		  			</a>
 		  		</c:if>
-		  	</td>
+	  		</td>
 		  </tr>
 	  </table>
-  </c:if>
+  <%-- </c:if> --%>
+  <br/>
 </div>
 <div class="container">
 	<table class="table table-hover text-center">

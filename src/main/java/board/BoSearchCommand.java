@@ -13,10 +13,29 @@ public class BoSearchCommand implements BoardInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String search = request.getParameter("search")==null ? "" : request.getParameter("search");
 		String searchString = request.getParameter("searchString")==null ? "" : request.getParameter("searchString");
-		
 		BoardDAO dao = new BoardDAO();
 		
-		ArrayList<BoardVO> vos = dao.getBoContentSearch(search,searchString);
+		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
+		int pageSize = request.getParameter("pageSize")==null? 5 : Integer.parseInt(request.getParameter("pageSize"));
+		int totRecCnt = dao.totRecCnt_search(search,searchString);;
+		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (totRecCnt / pageSize)+1;
+		int stratIndexNo = (pag-1) * pageSize;
+		int curScrStartNo = totRecCnt - stratIndexNo;
+		
+		int blockSize = 3;
+		int curBlock = (pag - 1) / blockSize;
+		int lastBlock = (totPage-1) / blockSize;
+		
+		request.setAttribute("pag", pag);
+		request.setAttribute("pageSize", pageSize);
+		request.setAttribute("blockSize", blockSize);
+		request.setAttribute("curBlock", curBlock);
+		request.setAttribute("lastBlock", lastBlock);
+		request.setAttribute("totPage", totPage);
+		request.setAttribute("stratIndexNo", stratIndexNo);
+		request.setAttribute("curScrStartNo", curScrStartNo);
+		
+		ArrayList<BoardVO> vos = dao.getBoContentSearch(search,searchString,stratIndexNo,pageSize);
 		
 		String searchTitle = "";
 		if(search.equals("title")) searchTitle = "제목";
@@ -24,18 +43,11 @@ public class BoSearchCommand implements BoardInterface {
 		else if(search.equals("content")) searchTitle = "내용";
 		else searchTitle = "제목,내용";
 		
-		request.setAttribute("searchCount", vos.size());
+		request.setAttribute("searchCount", totRecCnt);
 		request.setAttribute("vos", vos);
 		request.setAttribute("searchTitle", searchTitle);
 		request.setAttribute("search", search);
 		request.setAttribute("searchString", searchString);
-		
-		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
-		int pageSize = request.getParameter("pageSize")==null? 5 : Integer.parseInt(request.getParameter("pageSize"));
-		request.setAttribute("pag", pag);
-		request.setAttribute("pageSize", pageSize);
-		
-		
 		
 		
 		/*

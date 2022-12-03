@@ -18,6 +18,7 @@ public class BoListCommand implements BoardInterface {
 		int pageSize = request.getParameter("pageSize")==null? 5 : Integer.parseInt(request.getParameter("pageSize"));
 		int totRecCnt = dao.totRecCnt();
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (totRecCnt / pageSize)+1;
+		System.out.println(totPage);
 		int stratIndexNo = (pag-1) * pageSize;
 		int curScrStartNo = totRecCnt - stratIndexNo;
 			

@@ -38,6 +38,36 @@ public class BoardDAO {
 		return totRecCnt;
 	}
 	
+	// 검색 레코드 건수 구하기
+	public int totRecCnt_search(String search, String searchString) {
+		int totRecCnt = 0;
+		int searchPoint = 1;
+		try {
+			if(search.equals("title-content")) {
+				sql = "select count(*) as cnt from board where title like ? or content like ?";
+				searchPoint = 2;
+			}
+			else {
+				sql = "select count(*) as cnt from board where "+search+" like ?";
+			}
+			pstmt = conn.prepareStatement(sql);
+			if(searchPoint > 1) {
+				for(int i=1; i<=searchPoint; i++) pstmt.setString(i, "%"+searchString+"%");
+			}
+			else {
+				pstmt.setString(1, "%"+searchString+"%");
+			}
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return totRecCnt;
+	}
+	
 	
 	// 전체 게시글 가져오기
 	public ArrayList<BoardVO> getBoList(int stratIndexNo, int pageSize) {
@@ -239,26 +269,36 @@ public class BoardDAO {
 		return vo;
 	}
 
-
-	public ArrayList<BoardVO> getBoContentSearch(String search, String searchString) {
+	// 검색
+	public ArrayList<BoardVO> getBoContentSearch(String search, String searchString, int stratIndexNo, int pageSize) {
 		ArrayList<BoardVO> vos = new ArrayList<>();
 		int searchPoint = 1;
 		try {
+			// 제목,내용 일괄 검색
 			if(search.equals("title-content")) {
-				sql = "select * from board where title like ? or content like ?";
+				sql = "select *, datediff(now(), wDate) as day_diff,"
+						+ "TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),"
+						+ "date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board "
+						+ "where title like ? or content like ? order by idx desc limit ?,?;";
 				searchPoint = 2;
 			}
+			// 개별 검색(제목,작성자,내용)
 			else {
-				sql = "select * from board where "+search+" like ?";
+				sql = "select *, datediff(now(), wDate) as day_diff,"
+						+ "TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),"
+						+ "date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board "
+						+ "where "+search+" like ? order by idx desc limit ?,?";
 			}
 			pstmt = conn.prepareStatement(sql);
 			if(searchPoint > 1) {
-				for(int i=1; i<=searchPoint; i++) {
-					pstmt.setString(i, "%"+searchString+"%");
-				}
+				for(int i=1; i<=searchPoint; i++) pstmt.setString(i, "%"+searchString+"%");
+				pstmt.setInt(searchPoint+1, stratIndexNo);
+				pstmt.setInt(searchPoint+2, pageSize);
 			}
 			else {
 				pstmt.setString(1, "%"+searchString+"%");
+				pstmt.setInt(2, stratIndexNo);
+				pstmt.setInt(3, pageSize);
 			}
 			rs = pstmt.executeQuery();
 			
@@ -275,6 +315,8 @@ public class BoardDAO {
 				vo.setReadNum(rs.getInt("readNum"));
 				vo.setGood(rs.getInt("good"));
 				vo.setMid(rs.getString("mid"));
+				vo.setDay_diff(rs.getInt("day_diff"));
+				vo.setHour_diff(rs.getInt("hour_diff"));
 				vos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -349,5 +391,6 @@ public class BoardDAO {
 		}
 		return res;
 	}
+	
 	
 }

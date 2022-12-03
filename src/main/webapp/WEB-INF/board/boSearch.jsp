@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>boList.jsp</title>
+  <title>boSearch.jsp</title>
   <jsp:include page="/include/bs4.jsp"></jsp:include>
   <script>
   	'use strict'

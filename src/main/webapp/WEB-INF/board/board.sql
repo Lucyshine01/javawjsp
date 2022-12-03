@@ -130,6 +130,16 @@ select timestampdiff(hour, wDate, now()) from board;
 select *,timestampdiff(hour, wDate, now()) as hour_diff from board;
 select *,datediff(now(), wDate) as day_diff, timestampdiff(hour, wDate, now()) as hour_diff from board;
 
+select datediff(now(), wDate) as day_diff, TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i') ,date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board
+
+select *, datediff(now(), wDate) as day_diff,
+TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),
+date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board
+where title like '%인%' or content like '%인%' order by idx desc limit 0,5;
+
+select count(*) as cnt from board where title like '%인%' or content like '%인%';
+select count(*) as cnt from board where title like '%인%';
+
 /* 이전글 다음글 체크 */
 /* idx로 이전글 가져오기(rs.next 한번씩해서 가져오기) limit로 꼭 한건만 가져오기 */
 select * from board where idx < 5 order by idx desc limit 1;
