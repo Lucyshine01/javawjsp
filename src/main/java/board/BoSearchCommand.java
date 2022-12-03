@@ -14,13 +14,22 @@ public class BoSearchCommand implements BoardInterface {
 		String search = request.getParameter("search")==null ? "" : request.getParameter("search");
 		String searchString = request.getParameter("searchString")==null ? "" : request.getParameter("searchString");
 		BoardDAO dao = new BoardDAO();
+		System.out.println(search);
+		System.out.println(searchString);
 		
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		int pageSize = request.getParameter("pageSize")==null? 5 : Integer.parseInt(request.getParameter("pageSize"));
+		if(20 < pageSize) pageSize = 20;
+		else if(15 < pageSize && pageSize < 20) pageSize = 15;
+		else if(10 < pageSize && pageSize < 15) pageSize = 10;
+		else if(5 < pageSize && pageSize < 10) pageSize = 5;
+		else if(pageSize < 5) pageSize = 5;
 		int totRecCnt = dao.totRecCnt_search(search,searchString);;
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (totRecCnt / pageSize)+1;
 		int stratIndexNo = (pag-1) * pageSize;
 		int curScrStartNo = totRecCnt - stratIndexNo;
+		
+		System.out.println("next");
 		
 		int blockSize = 3;
 		int curBlock = (pag - 1) / blockSize;

@@ -10,27 +10,20 @@
   <title>boList.jsp</title>
   <jsp:include page="/include/bs4.jsp"></jsp:include>
   <script>
-  	'use strict'
+  	'use strict';
   	let pag = ${pag};
   	let totPage = ${totPage};
-  	
+		if(totPage == 0) totPage = 1;
+		
 		let search = '${search}';
   	if(pag > totPage) {
-  		if(search.length > 1){
-				location.href = "${ctp}/boSearch.bo?pageSize=${pageSize}&search=${search}&searchString=${searchString}&pag=${totPage}";
-			}
-			else {
-				location.href = "${ctp}/boList.bo?pageSize=${pageSize}&pag=${totPage}";
-			}
+  		if(search.length > 1) location.href = "${ctp}/boSearch.bo?pageSize=${pageSize}&search=${search}&searchString=${searchString}&pag=${totPage}";
+			else location.href = "${ctp}/boList.bo?pageSize=${pageSize}&pag=${totPage}";
   	}
   	function pageCheck() {
   		let pageSize = document.getElementById("pageSize").value;
-			if(search.length() > 1){
-				location.href = "${ctp}/boSearch.bo?pageSize="+pageSize+"&pag=${pag}&search=${search}&searchString=${searchString}";
-			}
-			else {
-				location.href = "${ctp}/boList.bo?pageSize="+pageSize+"&pag=${pag}";
-			}
+			if(search.length > 1) location.href = "${ctp}/boSearch.bo?pageSize="+pageSize+"&pag=${pag}&search=${search}&searchString=${searchString}";
+			else location.href = "${ctp}/boList.bo?pageSize="+pageSize+"&pag=${pag}";
 		}
   	function searchCheck() {
 			let searchString = $("#searchString").val();
@@ -203,12 +196,13 @@
 		<form name="searchForm" method="post" action="${ctp}/boSearch.bo">
 			<b>검색 : </b>
 			<select name="search">
-				<option value="title-content">제목 + 내용</option>
-				<option value="title">제목</option>
-				<option value="nickName">닉네임</option>
-				<option value="content">내용</option>
+				<option ${search=='all' ? 'selected' : '' } value="all">전체</option>
+				<option ${search=='title-content' ? 'selected' : '' } value="title-content">제목 + 내용</option>
+				<option ${search=='title' ? 'selected' : '' } value="title">제목</option>
+				<option ${search=='nickName' ? 'selected' : '' } value="nickName">닉네임</option>
+				<option ${search=='content' ? 'selected' : '' } value="content">내용</option>
 			</select>
-			<input type="text" name="searchString" id="searchString"/>
+			<input type="text" name="searchString" id="searchString" value="${searchString}"/>
 			<input type="button" value="검색" onclick="searchCheck()" class="btn btn-secondary btn-sm" />
 			<input type="hidden" name="pag" value="${pag}" />
 			<input type="hidden" name="pageSize" value="${pageSize}" />

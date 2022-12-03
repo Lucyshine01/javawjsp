@@ -16,12 +16,16 @@ public class BoListCommand implements BoardInterface {
 		// 1.페이징처리 준비
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		int pageSize = request.getParameter("pageSize")==null? 5 : Integer.parseInt(request.getParameter("pageSize"));
+		if(20 < pageSize) pageSize = 20;
+		else if(15 < pageSize && pageSize < 20) pageSize = 15;
+		else if(10 < pageSize && pageSize < 15) pageSize = 10;
+		else if(5 < pageSize && pageSize < 10) pageSize = 5;
+		else if(pageSize < 5) pageSize = 5;
 		int totRecCnt = dao.totRecCnt();
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (totRecCnt / pageSize)+1;
-		System.out.println(totPage);
 		int stratIndexNo = (pag-1) * pageSize;
 		int curScrStartNo = totRecCnt - stratIndexNo;
-			
+		
 		// 블록페이징처리.....(3단계) -> 블록의 시작번호를 0번부터 처리했다.
 		int blockSize = 3;
 		int curBlock = (pag - 1) / blockSize;

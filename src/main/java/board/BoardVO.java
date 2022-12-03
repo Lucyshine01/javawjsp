@@ -12,10 +12,12 @@ public class BoardVO {
 	private int readNum;
 	private int good;
 	private String mid;
+	private String uDate;
 	
 	//as 별칭 필드
 	private int day_diff;  // 날짜 차이 계산 필드(1일차이 계산필드)
 	private int hour_diff; // 시간 차이 계산 필드(1시간차이 계산필드)
+	private int upDay_diff;	// 업데이트 날짜 차이 계산 필드(1분단위 계산필드)
 	
 	// 이전글/다음글을 위한 변수 설정
 	private int preIdx;
@@ -89,6 +91,12 @@ public class BoardVO {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
+	public String getuDate() {
+		return uDate;
+	}
+	public void setuDate(String uDate) {
+		this.uDate = uDate;
+	}
 	public int getDay_diff() {
 		return day_diff;
 	}
@@ -100,6 +108,12 @@ public class BoardVO {
 	}
 	public void setHour_diff(int hour_diff) {
 		this.hour_diff = hour_diff;
+	}
+	public int getUpDay_diff() {
+		return upDay_diff;
+	}
+	public void setUpDay_diff(int upDay_diff) {
+		this.upDay_diff = upDay_diff;
 	}
 	public int getPreIdx() {
 		return preIdx;
@@ -130,8 +144,8 @@ public class BoardVO {
 	public String toString() {
 		return "BoardVO [idx=" + idx + ", nickName=" + nickName + ", title=" + title + ", email=" + email + ", homePage="
 				+ homePage + ", content=" + content + ", wDate=" + wDate + ", hostIp=" + hostIp + ", readNum=" + readNum
-				+ ", good=" + good + ", mid=" + mid + ", day_diff=" + day_diff + ", hour_diff=" + hour_diff + ", preIdx="
-				+ preIdx + ", nextIdx=" + nextIdx + ", preTitle=" + preTitle + ", nextTitle=" + nextTitle + "]";
+				+ ", good=" + good + ", mid=" + mid + ", uDate=" + uDate + ", day_diff=" + day_diff + ", hour_diff=" + hour_diff
+				+ ", upDay_diff=" + upDay_diff + ", preIdx=" + preIdx + ", nextIdx=" + nextIdx + ", preTitle=" + preTitle
+				+ ", nextTitle=" + nextTitle + "]";
 	}
-	
 }

@@ -38,36 +38,6 @@ public class BoardDAO {
 		return totRecCnt;
 	}
 	
-	// 검색 레코드 건수 구하기
-	public int totRecCnt_search(String search, String searchString) {
-		int totRecCnt = 0;
-		int searchPoint = 1;
-		try {
-			if(search.equals("title-content")) {
-				sql = "select count(*) as cnt from board where title like ? or content like ?";
-				searchPoint = 2;
-			}
-			else {
-				sql = "select count(*) as cnt from board where "+search+" like ?";
-			}
-			pstmt = conn.prepareStatement(sql);
-			if(searchPoint > 1) {
-				for(int i=1; i<=searchPoint; i++) pstmt.setString(i, "%"+searchString+"%");
-			}
-			else {
-				pstmt.setString(1, "%"+searchString+"%");
-			}
-			rs = pstmt.executeQuery();
-			rs.next();
-			totRecCnt = rs.getInt("cnt");
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			getConn.rsClose();
-		}
-		return totRecCnt;
-	}
-	
 	
 	// 전체 게시글 가져오기
 	public ArrayList<BoardVO> getBoList(int stratIndexNo, int pageSize) {
@@ -93,6 +63,7 @@ public class BoardDAO {
 				vo.setReadNum(rs.getInt("readNum"));
 				vo.setGood(rs.getInt("good"));
 				vo.setMid(rs.getString("mid"));
+				vo.setuDate(rs.getString("uDate"));
 				vo.setDay_diff(rs.getInt("day_diff"));
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				vos.add(vo);
@@ -109,7 +80,7 @@ public class BoardDAO {
 	public int setBoinputOk(BoardVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into board values (default,?,?,?,?,?,default,?,default,default,?)";
+			sql = "insert into board values (default,?,?,?,?,?,default,?,default,default,?,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getNickName());
 			pstmt.setString(2, vo.getTitle());
@@ -131,7 +102,7 @@ public class BoardDAO {
 	// 개별 자료 검색
 	public BoardVO getBoContentSearch(int idx) {
 		try {
-			sql = "select * from board where idx=?";
+			sql = "select *,timestampdiff(minute, udate, now()) as upDay_diff from board where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
@@ -148,6 +119,8 @@ public class BoardDAO {
 			vo.setReadNum(rs.getInt("readNum"));
 			vo.setGood(rs.getInt("good"));
 			vo.setMid(rs.getString("mid"));
+			vo.setuDate(rs.getString("uDate"));
+			vo.setUpDay_diff(rs.getInt("upDay_diff"));
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
@@ -224,7 +197,7 @@ public class BoardDAO {
 	public int setBoUpdate(BoardVO vo) {
 		int res = 0;
 		try {
-			sql = "update board set title=?, email=?, homePage=?, content=?, hostIp=? where idx = ?";
+			sql = "update board set title=?, email=?, homePage=?, content=?, hostIp=?, uDate = now()  where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getEmail());
@@ -274,8 +247,16 @@ public class BoardDAO {
 		ArrayList<BoardVO> vos = new ArrayList<>();
 		int searchPoint = 1;
 		try {
+			// 전체 검색
+			if(search.equals("all")) {
+				sql = "select *, datediff(now(), wDate) as day_diff,"
+						+ "TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),"
+						+ "date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board "
+						+ "where title like ? or content like ? or nickName like ? order by idx desc limit ?,?;";
+				searchPoint = 3;
+			}
 			// 제목,내용 일괄 검색
-			if(search.equals("title-content")) {
+			else if(search.equals("title-content")) {
 				sql = "select *, datediff(now(), wDate) as day_diff,"
 						+ "TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),"
 						+ "date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board "
@@ -290,16 +271,9 @@ public class BoardDAO {
 						+ "where "+search+" like ? order by idx desc limit ?,?";
 			}
 			pstmt = conn.prepareStatement(sql);
-			if(searchPoint > 1) {
-				for(int i=1; i<=searchPoint; i++) pstmt.setString(i, "%"+searchString+"%");
-				pstmt.setInt(searchPoint+1, stratIndexNo);
-				pstmt.setInt(searchPoint+2, pageSize);
-			}
-			else {
-				pstmt.setString(1, "%"+searchString+"%");
-				pstmt.setInt(2, stratIndexNo);
-				pstmt.setInt(3, pageSize);
-			}
+			for(int i=1; i<=searchPoint; i++) pstmt.setString(i, "%"+searchString+"%");
+			pstmt.setInt(searchPoint+1, stratIndexNo);
+			pstmt.setInt(searchPoint+2, pageSize);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -315,6 +289,7 @@ public class BoardDAO {
 				vo.setReadNum(rs.getInt("readNum"));
 				vo.setGood(rs.getInt("good"));
 				vo.setMid(rs.getString("mid"));
+				vo.setuDate(rs.getString("uDate"));
 				vo.setDay_diff(rs.getInt("day_diff"));
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				vos.add(vo);
@@ -327,6 +302,37 @@ public class BoardDAO {
 		return vos;
 	}
 
+	//검색 레코드 건수 구하기
+	public int totRecCnt_search(String search, String searchString) {
+		int totRecCnt = 0;
+		int searchPoint = 1;
+		try {
+			if(search.equals("all")) {
+				sql = "select count(*) as cnt from board where title like ? or content like ? or nickName like ?";
+				searchPoint = 3;
+			}
+			else if(search.equals("title-content")) {
+				sql = "select count(*) as cnt from board where title like ? or content like ?";
+				searchPoint = 2;
+			}
+			else {
+				sql = "select count(*) as cnt from board where "+search+" like ?";
+			}
+			pstmt = conn.prepareStatement(sql);
+			for(int i=1; i<=searchPoint; i++) pstmt.setString(i, "%"+searchString+"%");
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return totRecCnt;
+	}
+	
+	
+	
 	// 댓글 입력하기
 	public String setReplyInputOk(BoardReplyVO replyVo) {
 		String res = "0";

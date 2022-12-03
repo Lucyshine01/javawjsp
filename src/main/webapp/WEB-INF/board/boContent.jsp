@@ -91,9 +91,13 @@
 			});
 			
 		}
-  	
   </script>
-  <style></style>
+  <style>
+  	#main-table th {
+  		text-align: center;
+  		
+  	}
+  </style>
 </head>
 <body>
 <jsp:include page="/include/header.jsp"/>
@@ -106,12 +110,24 @@
   		<th class="text-right">hostIp : ${vo.hostIp}</th>
   	</tr>
   </table>
-  <table class="table table-bordered">
+  <table class="table table-bordered" id="main-table">
   	<tr>
   		<th>글쓴이</th>
   		<td>${vo.nickName}</td>
-  		<th>날짜</th>
-  		<td>${fn:substring(vo.wDate,0,16)}</td>
+  		<th>작성 날짜</th>
+  		<td width="400px">
+  			${fn:substring(vo.wDate,0,16)}
+  			<c:if test="${!empty vo.uDate}"> 
+  				<font style="font-size: 0.9em; float: right;">
+	  				<c:if test="${vo.upDay_diff == 0}">(방금 전 수정)</c:if>
+	  				<c:if test="${0 < vo.upDay_diff && vo.upDay_diff < 60}">(${vo.upDay_diff}분 전 수정)</c:if>
+	  				<c:if test="${60 < vo.upDay_diff && vo.upDay_diff < 60*24}">
+	  					(${fn:substring(vo.upDay_diff/60,0,fn:indexOf(vo.upDay_diff/60,'.'))}시간 전 수정)</c:if>
+	  				<c:if test="${60*24 < vo.upDay_diff}">
+	  					(${fn:substring(vo.upDay_diff/(60*24),0,fn:indexOf(vo.upDay_diff/(60*24),'.'))}일 전 수정)</c:if>
+  				</font>
+  			</c:if>
+  		</td>
   	</tr>
   	<tr>
   		<th>제목</th>
@@ -137,23 +153,33 @@
   		<th>글내용</th>
   		<td colspan="3" style="height: 250px">${fn:replace(vo.content, newLine, "<br/>")}</td>
   	</tr>
+	</table>
+	<table class="table table-borderless">
   	<tr>
-  		<td colspan="4" class="text-right">
-  			<c:if test="${flag == 'search'}">
-  				<form method="post" action="${ctp}/boSearch.bo?pageSize=${pageSize}&pag=${pag}">
-	  				<input type="button" value="돌아가기" onclick="submit();" class="btn btn-primary"/>
-  					<input type="hidden" name="search" value="${search}"/>
-  					<input type="hidden" name="searchString" value="${searchString}" />
-  				</form>
-  			</c:if>
-  			<c:if test="${flag != 'search'}">
+			<c:if test="${flag == 'search'}">
+				<td class="text-left">
+	  				<input type="button" value="돌아가기" onclick="location.href='${ctp}/boSearch.bo?pageSize=${pageSize}&pag=${pag}&search=${search}&searchString=${searchString}';" class="btn btn-primary" />
+				</td>
+				<td class="text-right">
+  				<c:if test="${vo.mid == sMid || sLevel == 0}">
+		  			<input type="button" value="수정하기" onclick="location.href='${ctp}/boUpdate.bo?idx=${vo.idx}&pageSize=${pageSize}&pag=${pag}';" class="btn btn-success"/>
+		  			<input type="button" value="삭제하기" onclick="boDelCheck()" class="btn btn-danger"/>
+	  			</c:if>
+					<input type="hidden" name="search" value="${search}"/>
+					<input type="hidden" name="searchString" value="${searchString}" />
+  			</td>
+			</c:if>
+			<c:if test="${flag != 'search'}">
+				<td class="text-left">
   				<input type="button" value="돌아가기" onclick="location.href='${ctp}/boList.bo?pageSize=${pageSize}&pag=${pag}';" class="btn btn-primary"/>
+  			</td>
+				<td class="text-right">
 	  			<c:if test="${vo.mid == sMid || sLevel == 0}">
 		  			<input type="button" value="수정하기" onclick="location.href='${ctp}/boUpdate.bo?idx=${vo.idx}&pageSize=${pageSize}&pag=${pag}';" class="btn btn-success"/>
 		  			<input type="button" value="삭제하기" onclick="boDelCheck()" class="btn btn-danger"/>
 	  			</c:if>
-  			</c:if>
-  		</td>
+  			</td>
+			</c:if>
   	</tr>
   </table>
   <%-- <c:if test="${flag != 'search'}"> --%>
@@ -186,6 +212,7 @@
 			<th>작성일자</th>
 			<th>접속IP</th>
 		</tr>
+		<%-- <c:set var="replyCnt" value="${0}"/> --%>
 		<c:forEach var="replyVo" items="${replyVos}">
 			<tr>
 				<td>
@@ -200,7 +227,11 @@
 					</c:if>
 				</td>
 			</tr>
+			<%-- <c:set var="replyCnt" value="${replyCnt + 1}"/> --%>
 		</c:forEach>
+		<c:if test="${empty replyVos}">
+			<tr><td colspan="4">게시글에 댓글이 없습니다!</td></tr>
+		</c:if>
 	</table>
 	<!-- 댓글 입력창 -->
 	<form name="replyForm">

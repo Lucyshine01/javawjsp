@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class BoContentCommand implements BoardInterface {
 
@@ -21,10 +22,24 @@ public class BoContentCommand implements BoardInterface {
 		BoardDAO dao = new BoardDAO();
 		
 		// 조회수 증가하기
-		dao.setReadNumPlus(idx);
+//		dao.setReadNumPlus(idx);
+		HttpSession session = request.getSession();
+		if(session.getAttribute("sRead") == null) {
+			session.setAttribute("sRead", "board"+idx+"/");
+			dao.setReadNumPlus(idx);
+		}
+		else {
+			String sRe = (String)session.getAttribute("sRead");
+			if(sRe.length() > 1000) session.setAttribute("sRead","");
+			if(sRe.contains("board"+idx)) {}
+			else {
+				sRe = sRe + "board" + idx + "/";
+				session.setAttribute("sRead",sRe);
+				dao.setReadNumPlus(idx);
+			}
+		}
+		
 		BoardVO vo = dao.getBoContentSearch(idx);
-		
-		
 		
 		
 		// 이전글과 다음글 처리

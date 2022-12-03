@@ -12,15 +12,20 @@ create table board (
 	readNum int default 0,						/* 글 조회수 */
 	good int default 0,								/* '좋아요' 클릭 횟수 누적하기 */
 	mid varchar(20) not null,					/* 회원 아이디(내가 올린 게시글 전체 조회시체 사용) */
+	uDate datetime,										/* 게시글을 업데이트한 날짜 */
 	primary key(idx)
 );
 
 ALTER TABLE board ADD goodId text;
+ALTER TABLE board ADD uDate datetime;
 alter table board drop goodId;
+alter table board drop uDate;
 
 desc board;
 
 insert into board values (default,'관리맨','게시판 서비스를 시작합니다.','saasdfhr@gmail.com','http://www.saasdfhr1234.com','이곳은 게시판입니다.',default,'192.168.50.79',default,default,'admin');
+
+update board set uDate = now() where idx=1;
 
 select * from board;
 
@@ -136,6 +141,9 @@ select *, datediff(now(), wDate) as day_diff,
 TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),
 date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board
 where title like '%인%' or content like '%인%' order by idx desc limit 0,5;
+
+select datediff(now(), udate) as upDay_diff from board where idx=19;
+select timestampdiff(minute, udate, now()) as upDay_diff from board where idx=19;
 
 select count(*) as cnt from board where title like '%인%' or content like '%인%';
 select count(*) as cnt from board where title like '%인%';
