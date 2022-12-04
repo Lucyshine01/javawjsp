@@ -41,7 +41,6 @@ public class BoContentCommand implements BoardInterface {
 		
 		BoardVO vo = dao.getBoContentSearch(idx);
 		
-		
 		// 이전글과 다음글 처리
 		BoardVO preVo = dao.getPreNextSearch("pre", idx);
 		BoardVO nextVo = dao.getPreNextSearch("next", idx);

@@ -378,4 +378,40 @@ public class MemberDAO {
 			getConn.pstmtClose();
 		}
 	}
+	
+	// 이메일로 아이디 찾기
+	public String getMemberMid(String email) {
+		String mid = "";
+		try {
+			sql = "select mid from member where email = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs =pstmt.executeQuery();
+			if(rs.next()) mid = rs.getString("mid");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return mid;
+	}
+	
+	// 아이디 이메일로 계정 인증
+	public int getMemberPwd(String mid, String email) {
+		int res = 0;
+		try {
+			sql = "select * from member where mid = ? and email = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, email);
+			rs =pstmt.executeQuery();
+			if(rs.next()) res = 1;
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return res;
+	}
+	
 }

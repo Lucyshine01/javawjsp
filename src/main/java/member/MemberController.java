@@ -23,12 +23,12 @@ public class MemberController extends HttpServlet {
 		//세견이 끊겼다면 작업의 진행을 중지시키고 홈으로 전송시켜준다.
 		HttpSession session = request.getSession();
 		int level = session.getAttribute("sLevel")==null ? 99 : (int)session.getAttribute("sLevel");
-		if (level >= 5 && !cmd.equals("/memLogin") && !cmd.equals("/memLoginOk")) {
-			request.setAttribute("msg", "sessionOver");
-			request.setAttribute("url", request.getContextPath()+"/");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/include/message.jsp");
-			dispatcher.forward(request, response);
-		}
+//		if (level >= 5 && !cmd.equals("/memLogin") && !cmd.equals("/memLoginOk")) {
+//			request.setAttribute("msg", "sessionOver");
+//			request.setAttribute("url", request.getContextPath()+"/");
+//			RequestDispatcher dispatcher = request.getRequestDispatcher("/include/message.jsp");
+//			dispatcher.forward(request, response);
+//		}
 		
 		
 		if(cmd.equals("/memLogin")) {
@@ -56,6 +56,22 @@ public class MemberController extends HttpServlet {
 			command = new MemJoinOkCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
+		}
+		else if(cmd.equals("/memFindMid")) {
+			viewPage += "/memFind.jsp?flag=mid";
+		}
+		else if(cmd.equals("/memFindPwd")) {
+			viewPage += "/memFind.jsp?flag=pwd";
+		}
+		else if(cmd.equals("/memFindMidOk")) {
+			command = new MemFindMidOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(cmd.equals("/memFindPwdOk")) {
+			command = new MemFindPwdOkCommand();
+			command.execute(request, response);
+			return;
 		}
 		else if (level >= 5) {
 			request.setAttribute("msg", "sessionOver");

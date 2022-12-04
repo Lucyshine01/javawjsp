@@ -45,8 +45,8 @@
 			    <div class="row" style="font-size:12px">
 			    	<span class="col"><input type="checkbox" name="idCheck" checked/>아이디 저장</span>
 			    	<span class="col">
-			    		[<a href="#">아이디찾기</a>] / 
-			    		[<a href="#">비밀번호찾기</a>]
+			    		[<a href="${ctp}/memFindMid.mem">아이디찾기</a>] / 
+			    		[<a href="${ctp}/memFindPwd.mem">비밀번호찾기</a>]
 			    	</span>
 			    </div>
 			  </form>
