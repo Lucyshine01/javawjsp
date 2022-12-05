@@ -218,9 +218,11 @@
 				<td>
 					${replyVo.nickName}
 				</td>
-				<td style="width: 600px;">${replyVo.content}</td>
-				<td>${fn:substring(replyVo.wDate,0,16)}</td>
-				<td>
+				<td style="width: 600px; border-left: 1px solid #eee; padding-left: 30px" class="text-left">
+					${fn:replace(replyVo.content, newLine, "<br/>")}
+				</td>
+				<td style="border-left: 1px solid #eee;">${fn:substring(replyVo.wDate,0,16)}</td>
+				<td style="border-left: 1px solid #eee;">
 					${replyVo.hostIp}
 					<c:if test="${sMid == replyVo.mid || sLevel == 0}">
 						<a href="javascript:replyDelCheck(${replyVo.idx})" style="width: 50px;font-size: 1.5em;" title="삭제하기">x</a>

@@ -178,7 +178,7 @@
 <p><br/></p>
 <div class="container">
   <form name="myform" method="post" action="${ctp}/memUpdateOk.mem" class="was-validated">
-    <h2>회 원 가 입</h2>
+    <h2>회 원 정 보 수 정</h2>
     <br/>
     <div class="form-group">
     	아이디 : ${sMid}

@@ -36,6 +36,35 @@
 				searchForm.submit();
 			}
 		}
+  	function reply_blank(idx) {
+			$.ajax({
+				type: "post",
+				url: "${ctp}/boReplyViewPage.bo",
+				data: {boardIdx: idx},
+				success: function(res) {
+					let jsonRes = JSON.parse(res);	// json형식으로 넘어온 자료를 다시 파싱과정을 거쳐서 일반 문자열로 변환시켜준다.
+					
+    			let tempNickName="", tempContent="", tempwDate="", tempHostIp="";
+    			
+    			for(let i in jsonRes.members) {
+    				tempMid      += jsonRes.members[i].mid + "/";
+    				tempName     += jsonRes.members[i].name + "/";
+    				tempNickName += jsonRes.members[i].nickName + "/";
+    				tempGender   += jsonRes.members[i].gender + "/";
+    				tempPoint    += jsonRes.members[i].point + "/";
+    			}
+    			
+    			$("#tMid").html(tempMid);
+    			$("#name").html(tempName);
+    			$("#nickName").html(tempNickName);
+    			$("#gender").html(tempGender);
+    			$("#point").html(tempPoint);
+				},
+				error: function() {
+					
+				}
+			});
+		}
   </script>
   <style></style>
 </head>
@@ -86,8 +115,12 @@
   				<c:set var="ctp_content" value="${ctp}/boContent.bo?idx=${vo.idx}&pageSize=${pageSize}&pag=${pag}"/>
   				<a 
   					<c:if test="${search != null}">href="${ctp_content}&flag=search&search=${search}&searchString=${searchString}"</c:if>
-	  				<c:if test="${search == null}">href="${ctp_content}"</c:if>>${vo.title}
+	  				<c:if test="${search == null}">href="${ctp_content}"</c:if>>
+	  				${vo.title}
   				</a>
+  				<c:if test="${vo.replyCount != 0}">
+	  					<a href="javascript:reply_blank(${vo.idx})"><font style="font-size: 0.9em; color: #999">[${vo.replyCount}]</font></a>
+	  				</c:if>
   				<c:if test="${vo.hour_diff < 24}"><img src="${ctp}/images/new.gif"/></c:if>
 				</td>
   			<%-- <td class="text-left"><a >${vo.title}</a><c:if test="${vo.hour_diff < 24}"><img src="${ctp}/images/new.gif"/></c:if></td> --%>

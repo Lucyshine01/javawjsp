@@ -31,6 +31,10 @@
 				      <a class="dropdown-item" href="${ctp}/pass.st">비밀번호암호화</a>
 				      <a class="dropdown-item" href="${ctp}/ajax1.st">AJax연습1</a>
 				      <a class="dropdown-item" href="${ctp}/userList.st">AJax연습2</a>
+				      <a class="dropdown-item" href="${ctp}/upLoad1.st">싱글파일업로드1</a>
+				      <a class="dropdown-item" href="${ctp}/upLoad2.st">멀티파일업로드1</a>
+				      <a class="dropdown-item" href="${ctp}/upLoad3.st">멀티파일업로드2</a>
+				      <a class="dropdown-item" href="${ctp}/upLoad4.st">멀티파일업로드3</a>
 				    </div>
 		      </li>
 	      </c:if>

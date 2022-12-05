@@ -86,6 +86,11 @@ public class BoardController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
+		else if(cmd.equals("/boReplyViewPage")) {
+			command = new boReplyViewPagekCommand();
+			command.execute(request, response);
+			return;
+		}
 		
 //		else if(cmd.equals("/memLogout")) {
 //			command = new MemLogoutCommand();

@@ -41,6 +41,21 @@ public class BoContentCommand implements BoardInterface {
 		
 		BoardVO vo = dao.getBoContentSearch(idx);
 		
+		// 선생님 방법
+//		// 해당글에 좋아요 버튼을 클릭하였었다면 '좋아요세션'에 아이디를 저장시켜두었기에 찾아서 있다면 sSw값을 1로 보내어 하트색을 빨강색으로 변경유지하게한다.
+//		ArrayList<String> goodIdx = (ArrayList) session.getAttribute("sGoodIdx");
+//		if(goodIdx == null) {
+//			goodIdx = new ArrayList<String>();
+//		}
+//		String imsiGoodIdx = "boardGood" + idx;
+//		if(goodIdx.contains(imsiGoodIdx)) {
+//			session.setAttribute("sSw", "1");		// 로그인 사용자가 이미 좋아요를 클릭한 게시글이라면 빨강색으로 표시가히위해 sSW에 1을 전송하고 있다.
+//		}
+//		else {
+//			session.setAttribute("sSw", "0");
+//		}
+		
+		
 		// 이전글과 다음글 처리
 		BoardVO preVo = dao.getPreNextSearch("pre", idx);
 		BoardVO nextVo = dao.getPreNextSearch("next", idx);

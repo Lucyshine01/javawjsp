@@ -61,6 +61,38 @@ public class StudyController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
+		else if(cmd.equals("/upLoad1")) {
+			viewPage += "/pdstest/upLoad1.jsp";
+		}
+		else if(cmd.equals("/upLoad1Ok")) {
+			command = new UpLoad1OkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(cmd.equals("/upLoad2")) {
+			viewPage += "/pdstest/upLoad2.jsp";
+		}
+		else if(cmd.equals("/upLoad3")) {
+			viewPage += "/pdstest/upLoad3.jsp";
+		}
+		else if(cmd.equals("/upLoad2Ok")) {
+			command = new UpLoad2OkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(cmd.equals("/upLoad4")) {
+			viewPage += "/pdstest/upLoad4.jsp";
+		}
+		else if(cmd.equals("/downLoad")) {
+			command = new DownLoadCommand();
+			command.execute(request, response);
+			viewPage += "/pdstest/downLoad.jsp";
+		}
+		else if(cmd.equals("/fileDelete")) {
+			command = new FileDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
 		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

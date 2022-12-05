@@ -40,6 +40,7 @@ create table boardReply (
 	content text not null,						/* 댓글 내용 */
 	primary key(idx),
 	foreign key(boardIdx) references board(idx)
+	/* 문자면 상관x(정수형 같은 필드일때 문제가 됌) */
 	/* on update cascade  부모키에 따라서 같이 업데이트 */
 	/*	on delete restrict 부모키를 삭제하려하는 것 제약 */
 );
@@ -155,3 +156,52 @@ select * from board where idx < 5 order by idx desc limit 1;
 select * from board where idx > 5 limit 1;
 select * from board;
 
+
+/* 댓글의 수를 전체 List에 출력하기 연습 */
+select * from boardReply order by idx desc;
+-- 댓글테이블(boardReply)에서 board테이블의 고유번호 17번글에 딸려있는 댓글의 개수는?
+select count(*) as cnt from boardReply where boardIdx = 17;
+-- 댓글테이블(boardReply)에서 board테이블의 고유번호 17번글에 딸려있는 댓글의 개수는?
+-- 원본글의 고유번호와 함께 출력, 갯수의 별명은 replyCnt
+select boardIdx,count(*) as replyCnt from boardReply where boardIdx = 17;
+
+-- 댓글테이블(boardReply)에서 board테이블의 고유번호 17번글에 딸려있는 댓글의 개수는?
+-- 원본글의 고유번호와 함께 출력, 갯수의 별명은 replyCnt
+-- 이떄 원본글을 쓴 닉네임을 함께 출력하시오. 단, 닉네임은 board(원본글)테이블에서 가져와서 출력하시오. 
+select boardIdx,nickName,count(*) as replyCnt from boardReply where boardIdx = 17;
+SELECT boardIdx,
+	(SELECT nickName FROM board where idx=17) AS nickName,
+	count(*) AS replyCnt 
+	FROM boardReply WHERE boardIdx = 17;
+
+-- 앞의 문장을 부모테이블(board)의 관점에서 보자...
+SELECT mid, nickname FROM board where idx =17;
+-- 앞의 닉네임을을 자식(댓글)테이블(boardReply)에서 가져와서 보여준다면????
+SELECT mid,
+	(select nickName from boardReply where boardIdx=16) as nickName
+	FROM where idx =16;
+
+-- 부모관점(board)에서 고유번호 16번의 아이디와, 현재글에 달려있는 댓글의 개수???
+SELECT mid,
+	(SELECT count(*) FROM boardReply WHERE boardIdx=16)
+	FROM board WHERE idx=16;
+	
+-- 부모관점(board)에서 고유번호 16번의 모든 내용과, 현재글에 달려있는 댓글의 개수를 가져오되, 최근글 5개만 출력?
+
+SELECT *,
+	(SELECT count(*) FROM boardReply WHERE boardIdx=board.idx) as replyCount
+	FROM board
+	limit 20;
+
+-- 부모관점(board)에서 고유번호 16번의 모든 내용과, 현재글에 달려있는 댓글의 개수를 가져오되, 최근글 5개만 출력?
+-- 각각의 테이블에 별명을 붙여서 앞의 내용을 변경시켜보자.
+SELECT *,
+	(SELECT count(*) FROM boardReply WHERE boardIdx=b.idx) as replyCount
+	FROM board b
+	limit 20;
+
+select *,(select count(*) FROM boardReply WHERE boardIdx=b.idx) as replyCnt,
+	datediff(now(), wDate) as day_diff,
+	TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),
+	date_format(now(), '%Y-%m-%d %H:%i')) AS 
+	hour_diff from board b order by idx desc limit 0,10;

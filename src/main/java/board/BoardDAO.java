@@ -43,9 +43,15 @@ public class BoardDAO {
 	public ArrayList<BoardVO> getBoList(int stratIndexNo, int pageSize) {
 		ArrayList<BoardVO> vos = new ArrayList<>();
 		try {
-			sql = "select *, datediff(now(), wDate) as day_diff,"
+//			sql = "select *, datediff(now(), wDate) as day_diff,"
+//					+ "TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),"
+//					+ "date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board order by idx desc limit ?,?";
+			sql = "SELECT *,"
+					+ "(SELECT count(*) FROM boardReply WHERE boardIdx=b.idx) AS replyCount,"
+					+ "DATEDIFF(now(), wDate) AS day_diff,"
 					+ "TIMESTAMPDIFF(hour, date_format(wDate, '%Y-%m-%d %H:%i'),"
-					+ "date_format(now(), '%Y-%m-%d %H:%i')) AS hour_diff from board order by idx desc limit ?,?";
+					+ "DATE_FORMAT(now(), '%Y-%m-%d %H:%i')) AS hour_diff "
+					+ "FROM board b ORDER BY idx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, stratIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -64,8 +70,11 @@ public class BoardDAO {
 				vo.setGood(rs.getInt("good"));
 				vo.setMid(rs.getString("mid"));
 				vo.setuDate(rs.getString("uDate"));
+				
 				vo.setDay_diff(rs.getInt("day_diff"));
 				vo.setHour_diff(rs.getInt("hour_diff"));
+				vo.setReplyCount(rs.getInt("replyCount"));
+				
 				vos.add(vo);
 			}
 		} catch (SQLException e) {

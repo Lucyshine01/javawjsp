@@ -54,7 +54,7 @@
   					return;
   				}
   				var pwdWin = window.open("pwdCheck","pwdWin","width=580px,height=250px");
-  				pwdWin.document.write("<p><br/></p><h2>재설정된 비밀번호는 "+res+"입니다.<br/>지급받으신 비밀번호를 로그인후 변경해주세요</h2>");
+  				pwdWin.document.write("<p><br/></p><h2>재설정된 비밀번호는 "+res+"입니다.<br/>지급받으신 비밀번호를 로그인후 변경해주세요.</h2>");
   				location.href = "${ctp}/memLogin.mem";
 				},
   			error: function() {
@@ -79,7 +79,7 @@
 		  	<c:if test="${flag == 'mid'}">
 			  	<form name="myform" class="was-validated">
 				  	<h2>회원 찾기</h2>
-				  	<p>회원 이메일과 닉네임을 입력해 주세요.</p>
+				  	<p>회원 이메일을 입력해 주세요.</p>
 				  	<div class="form-group mb-3">
 				      <div class="input-group">
 					      <input type="text" class="form-control" name="email1" id="email1"  placeholder="example" required autofocus/>
