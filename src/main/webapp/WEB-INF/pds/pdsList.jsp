@@ -108,9 +108,17 @@
   	<c:forEach var="vo" items="${vos}" varStatus="st">
   		<tr>
   			<td>${curScrStartNo}</td>
-  			<td>${vo.title}</td>
+  			<td>${vo.title}
+  				<c:if test="${vo.day_diff < 1}"><img src="${ctp}/images/new.gif"/></c:if>
+  			</td>
   			<td>${vo.nickName}</td>
-  			<td>${vo.fDate}</td>
+  			<td>
+  				<c:if test="${vo.hour_diff < 1}">1시간 내</c:if>
+  				<c:if test="${1 < vo.hour_diff && vo.hour_diff < 24}">${vo.hour_diff}시간 전</c:if>
+  				<c:if test="${vo.day_diff == 1}">하루 전</c:if>
+  				<c:if test="${1 < vo.day_diff && vo.day_diff < 30}">${vo.day_diff}일 전</c:if>
+  				<c:if test="${30 <= vo.day_diff}">${fn:substring(vo.fDate,0,10)}</c:if>
+  			</td>
   			<td>${vo.part}</td>
   			<td>
   				<c:set var="fNames" value="${fn:split(vo.fName,'/')}" />
@@ -132,8 +140,32 @@
   		<c:set var="curScrStartNo" value="${curScrStartNo-1}" />
   	</c:forEach>
   </table>
+	<div class="text-center">
+	  <ul class="pagination justify-content-center">
+	    <c:if test="${pag > 1}">
+	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?pag=1">첫페이지</a></li>
+	    </c:if>
+	    <c:if test="${curBlock > 0}">
+	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li>
+	    </c:if>
+	    <c:forEach var="i" begin="${(curBlock)*blockSize + 1}" end="${(curBlock)*blockSize + blockSize}" varStatus="st">
+	      <c:if test="${i <= totPage && i == pag}">
+	    		<li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/pdsList.pds?pag=${i}">${i}</a></li>
+	    	</c:if>
+	      <c:if test="${i <= totPage && i != pag}">
+	    		<li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?pag=${i}">${i}</a></li>
+	    	</c:if>
+	    </c:forEach>
+	    <c:if test="${curBlock < lastBlock}">
+	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?pag=${(curBlock+1)*blockSize + 1}">다음블록</a></li>
+	    </c:if>
+	    <c:if test="${pag < totPage}">
+	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?pag=${totPage}">마지막페이지</a></li>
+	    </c:if>
+	  </ul>
+	</div>
 </div>
-
+		
 <!-- The Modal(모달창 클릭시 자료실의 내용을 모달창에 출력한다.) -->
   <div class="modal fade" id="myModal">
     <div class="modal-dialog">
@@ -169,7 +201,6 @@
       </div>
     </div>
   </div>
-
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>
 </body>

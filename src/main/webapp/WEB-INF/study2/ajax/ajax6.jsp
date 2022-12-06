@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ajax1.jsp</title>
+  <title>ajax6.jsp</title>
   <jsp:include page="/include/bs4.jsp"></jsp:include>
   <script>
     'use strict';

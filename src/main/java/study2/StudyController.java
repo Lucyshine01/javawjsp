@@ -45,6 +45,9 @@ public class StudyController extends HttpServlet {
 		else if(cmd.equals("/ajax1")) {
 			viewPage += "/ajax/ajax1.jsp";
 		}
+		else if(cmd.equals("/ajax6")) {
+			viewPage += "/ajax/ajax6.jsp";
+		}
 		else if(cmd.equals("/userList")) {
 			command = new UserListCommand();
 			command.execute(request, response);

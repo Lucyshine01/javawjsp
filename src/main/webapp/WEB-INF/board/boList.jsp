@@ -36,32 +36,41 @@
 				searchForm.submit();
 			}
 		}
-  	function reply_blank(idx) {
+  	function reply_blank(idx,title,nickName) {
 			$.ajax({
 				type: "post",
 				url: "${ctp}/boReplyViewPage.bo",
 				data: {boardIdx: idx},
 				success: function(res) {
-					let jsonRes = JSON.parse(res);	// json형식으로 넘어온 자료를 다시 파싱과정을 거쳐서 일반 문자열로 변환시켜준다.
+					let jsonRes = JSON.parse(res);
 					
-    			let tempNickName="", tempContent="", tempwDate="", tempHostIp="";
-    			
-    			for(let i in jsonRes.members) {
-    				tempMid      += jsonRes.members[i].mid + "/";
-    				tempName     += jsonRes.members[i].name + "/";
-    				tempNickName += jsonRes.members[i].nickName + "/";
-    				tempGender   += jsonRes.members[i].gender + "/";
-    				tempPoint    += jsonRes.members[i].point + "/";
-    			}
-    			
-    			$("#tMid").html(tempMid);
-    			$("#name").html(tempName);
-    			$("#nickName").html(tempNickName);
-    			$("#gender").html(tempGender);
-    			$("#point").html(tempPoint);
+					let tempIdx = "";
+					let tempBoardIdx = "";
+					let tempMid = "";
+					let tempNickName = "";
+					let tempwDate = "";
+					let tempHostIp = "";
+					let tempContent = "";
+					//$(".myModal").on("show.bs.modal", function(e) {
+					
+					$(".modal-header #title").html(title);
+					$(".modal-header #nick").html(nickName);
+					for(let i in jsonRes.reply) {
+						tempIdx = jsonRes.reply[i].idx;
+						tempBoardIdx = jsonRes.reply[i].boardIdx;
+						tempMid = jsonRes.reply[i].mid;
+						tempNickName = jsonRes.reply[i].nickName;
+						tempwDate = jsonRes.reply[i].wDate;
+						tempHostIp = jsonRes.reply[i].hostIp;
+						tempContent = jsonRes.reply[i].content;
+						let str = '<tr><td>'+tempNickName+'</td><td style="border-left: 1px solid #eee;">'+tempContent.replace("\n", "<br/>")+'</td>';
+								str += '<td style="border-left: 1px solid #eee;">'+tempwDate.substring(0, 16)+'</td><td style="border-left: 1px solid #eee;">'+tempHostIp+'</td></tr>';
+						$(".modal-body table").append(str);
+					}
+					//}
 				},
 				error: function() {
-					
+					alert("실패");
 				}
 			});
 		}
@@ -75,6 +84,7 @@
 <c:if test="${search == null}"><c:set var="ctp_boList" value="${ctp}/boList.bo?pageSize=${pageSize}"/></c:if>
 <div class="container">
 	<!-- search.bo -->
+	<div id="test"></div>
 	<c:if test="${search != null}">
 		<h2 class="text-center">게 시 판 조 건 검 색 리 스 트</h2>
 	  <div class="text-center">
@@ -118,9 +128,9 @@
 	  				<c:if test="${search == null}">href="${ctp_content}"</c:if>>
 	  				${vo.title}
   				</a>
-  				<c:if test="${vo.replyCount != 0}">
-	  					<a href="javascript:reply_blank(${vo.idx})"><font style="font-size: 0.9em; color: #999">[${vo.replyCount}]</font></a>
-	  				</c:if>
+					<c:if test="${vo.replyCount != 0}">
+  					<a href="#" onclick="reply_blank(${vo.idx},'${vo.title}','${vo.nickName}')" data-toggle="modal" data-target="#myModal"><font style="font-size: 0.9em; color: #999">[${vo.replyCount}]</font></a>
+  				</c:if>
   				<c:if test="${vo.hour_diff < 24}"><img src="${ctp}/images/new.gif"/></c:if>
 				</td>
   			<%-- <td class="text-left"><a >${vo.title}</a><c:if test="${vo.hour_diff < 24}"><img src="${ctp}/images/new.gif"/></c:if></td> --%>
@@ -243,6 +253,36 @@
 	</div>
 	<!-- 검색기 처리 끝 -->
 </div>
+
+<!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">제목 : <span id="title"></span> (작성자:<span id="nick"></span>)</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        	<div class="container" id="modal-main">
+        		<table class="table table-hover text-center">
+        			<tr><th>작성자</th><th>댓글내용</th><th>작성일자</th><th>접속IP</th></tr>
+        			
+        		</table>
+        	</div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>
 </body>

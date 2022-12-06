@@ -87,7 +87,7 @@ public class BoardController extends HttpServlet {
 			return;
 		}
 		else if(cmd.equals("/boReplyViewPage")) {
-			command = new boReplyViewPagekCommand();
+			command = new BoReplyViewPageCommand();
 			command.execute(request, response);
 			return;
 		}
