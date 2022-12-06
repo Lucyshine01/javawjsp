@@ -50,6 +50,8 @@
   	else if(msg == "boUpdateNo") msg = "게시글이 수정처리에 실패했습니다.";
   	else if(msg == "upLoad1Ok") msg = "파일이 업로드 되었습니다.";
   	else if(msg == "upLoad1No") msg = "파일업로드가 실패하였습니다.";
+  	else if(msg == "pdsInputOk") msg = "자료실에 파일이 업로드 되었습니다.";
+  	else if(msg == "pdsInputNo") msg = "파일업로드가 실패하였습니다.";
   	
 		alert(msg);
 		if(url != "") location.href = url;

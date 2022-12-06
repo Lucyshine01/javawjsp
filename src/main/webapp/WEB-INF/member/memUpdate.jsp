@@ -177,7 +177,7 @@
 <jsp:include page="/include/header.jsp"/>
 <p><br/></p>
 <div class="container">
-  <form name="myform" method="post" action="${ctp}/memUpdateOk.mem" class="was-validated">
+  <form name="myform" method="post" action="${ctp}/memUpdateOk.mem" class="was-validated" enctype="multipart/form-data" >
     <h2>회 원 정 보 수 정</h2>
     <br/>
     <div class="form-group">
@@ -399,7 +399,7 @@
     <div  class="form-group">
       회원 사진(파일용량:2MByte이내) :
       <img src="${ctp}/data/member/${vo.photo}" width="100px" />
-      <input type="file" name="fName" id="file" class="form-control-file border"/>
+      <input type="file" name="fName" id="fName" class="form-control-file border"/>
     </div>
     <button type="button" class="btn btn-secondary" onclick="fCheck()">회원정보수정</button> &nbsp;
     <button type="reset" class="btn btn-secondary">다시작성</button> &nbsp;
