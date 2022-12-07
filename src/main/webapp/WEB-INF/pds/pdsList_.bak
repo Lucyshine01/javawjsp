@@ -78,45 +78,18 @@
 				}
 			});
 		}
+
   	
-  	// modal창을 통해서 비밀번호 확인후 파일을 삭제처리
-  	function pdsDelCheckModal(idx,fSName) {
-  		
+  	
+  	// modaㅣ창을 통해서 비밀번호 확인후 파일을 삭제처리
+  	function pdsDelCheckModal(idx,fSName,part,pag) {
   		$("#myPwdModal").on("show.bs.modal", function(e) {
   			$(".modal-body #idx").val(idx);
   			$(".modal-body #fSName").val(fSName);
+  			$(".modal-body #part").val(part);
+  			$(".modal-body #pag").val(pag);
   		});
 		}
-  	
- // 선택한 항목의 자료 삭제하기...(aJax 처리)
-  	function pdsDelCheckModalOk() {
-		let idx = pwdModalForm.idx.value;
-		let fSName = pwdModalForm.fSName.value;
-		let pwd = pwdModalForm.pwd.value;
-		let query = {
-				idx : idx,
-				fSName : fSName,
-				pwd : pwd
-		}
-		
-		$.ajax({
-			type : "post",
-			url : "${ctp}/pdsDelete.pds",
-			data : query,
-			success: function(res) {
-				if(res == "1"){
-					alert("삭제되었습니다.");
-					location.reload();
-				}
-				else{
-					alert("삭제에 실패하였습니다.");
-				}
-			},
-			error: function() {
-				alert("전송 오류");
-			}
-		});
-	}
   	
   	// 다운로드 회수 증가
   	function downNumCheck(idx) {
@@ -133,16 +106,6 @@
 			});
 		}
   	
-  	// 검색기능
-  	function searchCheck() {
-			let searchString = $("#searchString").val();
-			if(searchString.trim() == ""){
-				alert("검색어를 입력해서 검색해주세요.");
-				return;
-			}
-			searchForm.submit;
-		}
-  	
   </script>
   <style></style>
 </head>
@@ -150,9 +113,6 @@
 <jsp:include page="/include/header.jsp"/>
 <p><br/></p>
 <div class="container">
-	<div>
-		<a href="${ctp}/test.pds">test</a>
-	</div>
   <h2>자 료 실 리 스 트(${part})</h2>
   <br />
   <table class="table table-borderless">
@@ -216,13 +176,13 @@
 				</td>
   			<td>${vo.downNum}</td>
   			<td>
-	  			<a href="#" onclick="modalView('${vo.title}','${vo.nickName}','${vo.mid}','${vo.part}','${vo.fName}','${vo.fSName}','${fSize_}','${vo.downNum}','${vo.fDate}')" class="badge badge-primary badgepill" data-toggle="modal" data-target="#myModal">모달창</a>
+	  			<a href="#" onclick="modalView('${vo.title}','${vo.nickName}','${vo.mid}','${vo.part}','${vo.fName}','${vo.fSName}','${fSize_}','${vo.downNum}','${vo.fDate}')" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">모달창</a>
 	  			<br/>
-	  			<a href="${ctp}/pdsTotalDown.pds?idx=${vo.idx}" class="badge badge-success badgepill">전체다운</a>
+	  			전체다운
 	  			<br/>
-	  			<a href="javascript:pdsDelCheck('${vo.idx}','${vo.fSName}')" class="badge badge-danger badgepill">삭제 1</a>
+	  			<a href="javascript:pdsDelCheck('${vo.idx}','${vo.fSName}')" class="btn btn-danger btn-sm mb-2">삭제 1</a>
 	  			<br/>
-	  			<a href="#" onclick="pdsDelCheckModal('${vo.idx}','${vo.fSName}')" data-toggle="modal" data-target="#myPwdModal" class="badge badge-danger badgepill">삭제 2</a>
+	  			<a href="#" onclick="pdsDelCheckModal('${vo.idx}','${vo.fSName}','${part}','${pag}')" data-toggle="modal" data-target="#myPwdModal" class="btn btn-danger btn-sm">삭제 2</a>
   			</td>
   		</tr>
   		<tr><td colspan="8" class="p-0 m-0"></td></tr>
@@ -253,25 +213,6 @@
 	    </c:if>
 	  </ul>
 	</div>
-	
-	<br/>
-	<!-- 검색기 처리 시작 -->
-	<div class="container">
-		<form name="searchForm" method="post" action="${ctp}/pdsSearch.pds">
-			<b>검색 : </b>
-			<select name="search">
-				<option ${search=='all' ? 'selected' : '' } value="all">전체</option>
-				<option ${search=='title-content' ? 'selected' : '' } value="title-content">제목 + 내용</option>
-				<option ${search=='title' ? 'selected' : '' } value="title">제목</option>
-				<option ${search=='nickName' ? 'selected' : '' } value="nickName">닉네임</option>
-			</select>
-			<input type="text" name="searchString" id="searchString" value="${searchString}"/>
-			<input type="button" value="검색" onclick="searchCheck()" class="btn btn-secondary btn-sm" />
-			<input type="hidden" name="pag" value="${pag}" />
-		</form>
-	</div>
-	<!-- 검색기 처리 끝 -->
-	
 </div>
 		
 <!-- The Modal(폼태그로 비밀번호 처리하기 위한 모달창) -->
@@ -287,48 +228,15 @@
         
         <!-- Modal body -->
         <div class="modal-body">
-        	<form name="pwdModalForm" class="was-validated" >
+        	<form name="pwdMoalForm" method="post" action="${ctp}/pdsPwdCheck.pds" class="was-validated" >
         		비밀번호 : 
         		<input type="password" name="pwd" id="pwd" placeholder="비밀번호 입력" class="form-control mb-3" required/>
-        		<input type="button" value="비밀번호확인후전송" class="btn btn-success form-control" onclick="pdsDelCheckModalOk()"/>
+        		<input type="submit" value="비밀번호확인후전송" class="btn btn-success form-control" />
         		<input type="hidden" name="idx" id="idx" />
         		<input type="hidden" name="fSName" id="fSName" />
+        		<input type="hidden" name="part" id="part" />
+        		<input type="hidden" name="pag" id="pag" />
         	</form>
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
- <!-- The Modal(모달창 클릭시 자료실의 내용을 모달창에 출력한다.) -->
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title"><span id="title"></span>(분류:<span id="part"></span>)</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-        	- 업로더 : <span id="nickName"></span>
-        	<hr />
-        	- 아이디 : <span id="mid"></span><br/>
-        	- 파일명 : <span id="fName"></span><br/>
-        	- 파일크기 : <span id="fSize"></span><br/>
-        	- 다운횟수 : <span id="downNum"></span><br/>
-        	<hr />
-        	- 저장파일명 : <span id="fSName"></span><br/>
-        	<div id="imgBox">
-        		
-        	</div>
-        	<img id="imgSrc" width="350px"/><br/>
         </div>
         
         <!-- Modal footer -->

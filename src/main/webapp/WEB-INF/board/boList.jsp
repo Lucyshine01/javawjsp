@@ -51,10 +51,13 @@
 					let tempwDate = "";
 					let tempHostIp = "";
 					let tempContent = "";
-					//$(".myModal").on("show.bs.modal", function(e) {
-					
+					//ajax안에선 안됌
+					//$("#relpyModal").on("show.bs.modal", function(e) {
+					$(".modal-body table").html("");
 					$(".modal-header #title").html(title);
 					$(".modal-header #nick").html(nickName);
+					let str = '<tr><th>작성자</th><th>댓글내용</th><th>작성일자</th><th>접속IP</th></tr>';
+					$(".modal-body table").append(str);
 					for(let i in jsonRes.reply) {
 						tempIdx = jsonRes.reply[i].idx;
 						tempBoardIdx = jsonRes.reply[i].boardIdx;
@@ -63,8 +66,8 @@
 						tempwDate = jsonRes.reply[i].wDate;
 						tempHostIp = jsonRes.reply[i].hostIp;
 						tempContent = jsonRes.reply[i].content;
-						let str = '<tr><td>'+tempNickName+'</td><td style="border-left: 1px solid #eee;">'+tempContent.replace("\n", "<br/>")+'</td>';
-								str += '<td style="border-left: 1px solid #eee;">'+tempwDate.substring(0, 16)+'</td><td style="border-left: 1px solid #eee;">'+tempHostIp+'</td></tr>';
+						str = '<tr><td>'+tempNickName+'</td><td style="border-left: 1px solid #eee;">'+tempContent.replace("\n", "<br/>")+'</td>';
+						str += '<td style="border-left: 1px solid #eee;">'+tempwDate.substring(0, 16)+'</td><td style="border-left: 1px solid #eee;">'+tempHostIp+'</td></tr>';
 						$(".modal-body table").append(str);
 					}
 					//}
@@ -129,7 +132,7 @@
 	  				${vo.title}
   				</a>
 					<c:if test="${vo.replyCount != 0}">
-  					<a href="#" onclick="reply_blank(${vo.idx},'${vo.title}','${vo.nickName}')" data-toggle="modal" data-target="#myModal"><font style="font-size: 0.9em; color: #999">[${vo.replyCount}]</font></a>
+  					<a href="#" onclick="reply_blank(${vo.idx},'${vo.title}','${vo.nickName}')" data-toggle="modal" data-target="#relpyModal"><font style="font-size: 0.9em; color: #999">[${vo.replyCount}]</font></a>
   				</c:if>
   				<c:if test="${vo.hour_diff < 24}"><img src="${ctp}/images/new.gif"/></c:if>
 				</td>
@@ -138,6 +141,7 @@
   			<td>
   				<c:if test="${vo.hour_diff < 24}">
   					<c:if test="${vo.hour_diff == 0}">방금 전</c:if>
+  						
   					<c:if test="${vo.hour_diff > 0}">${vo.hour_diff}시간 전</c:if>
   				</c:if>
   				<c:if test="${vo.hour_diff >= 24}">
@@ -255,7 +259,7 @@
 </div>
 
 <!-- The Modal -->
-  <div class="modal fade" id="myModal">
+  <div class="modal fade" id="relpyModal">
     <div class="modal-dialog">
       <div class="modal-content">
       
@@ -269,7 +273,7 @@
         <div class="modal-body">
         	<div class="container" id="modal-main">
         		<table class="table table-hover text-center">
-        			<tr><th>작성자</th><th>댓글내용</th><th>작성일자</th><th>접속IP</th></tr>
+        			
         			
         		</table>
         	</div>

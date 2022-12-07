@@ -178,6 +178,43 @@ public class PdsDAO {
 		return res;
 	}
 	
+	// 다운로드 횟수 추가하기
+	public void setPdsDownNum(int idx) {
+		try {
+			sql = "update pds set downNum=downNum+1 where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+	}
+
+	public int totRecCnt_search(String part, String search, String searchString) {
+		int totRecCnt = 0;
+		try {
+			if(part.equals("전체")) {
+				sql = "select count(*) as cnt from pds";
+			}
+			else {
+				sql = "select count(*) as cnt from pds where part = ?";
+			}
+			pstmt = conn.prepareStatement(sql);
+			if(!part.equals("전체")) pstmt.setString(1, part);
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return totRecCnt;
+	}
+	
 	
 	
 }

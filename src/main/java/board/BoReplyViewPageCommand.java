@@ -34,15 +34,15 @@ public class BoReplyViewPageCommand implements BoardInterface {
 			map.put("content", vo.getContent());
 			// map(vo)한개에 담아줄 JSON오브젝트 한개 생성
 			JSONObject replyInfo = new JSONObject(map);
-			System.out.println("replyInfo : "+replyInfo);
+			//System.out.println("replyInfo : "+replyInfo);
 			replyArray.add(replyInfo);
-			System.out.println("replyArray : "+replyArray);
+			//System.out.println("replyArray : "+replyArray);
 		}
 		// ajax에서 사용할 변수명을 정하기위해 JSON오브젝트를 새로 생성해 JSONArray 객체에 변수명을 정해 담아준다
 		JSONObject replyTotal = new JSONObject();
 		replyTotal.put("reply", replyArray);
-		System.out.println("replyTotal : "+replyTotal);
-		System.out.println("replyTotal.toJSONString : "+replyTotal.toJSONString());
+		//System.out.println("replyTotal : "+replyTotal);
+		//System.out.println("replyTotal.toJSONString : "+replyTotal.toJSONString());
 		
 		// .toJSONStirng으로 JSON객체를 문자열화해서 올려준다
 		String str = replyTotal.toJSONString();
