@@ -22,5 +22,5 @@ DESC pds;
 
 SELECT * FROM pds ORDER BY idx DESC;
 
-
+select * from pds where (nickName like '%a%' or title like '%a%' or content like '%a%') and part = '학습';
 

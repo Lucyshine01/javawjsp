@@ -22,7 +22,6 @@ public class PdsListCommand implements PdsInterface {
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (totRecCnt / pageSize)+1;
 		int stratIndexNo = (pag-1) * pageSize;
 		int curScrStartNo = totRecCnt - stratIndexNo;
-		
 		// 블록페이징처리.....(3단계) -> 블록의 시작번호를 0번부터 처리했다.
 		int blockSize = 3;
 		int curBlock = (pag - 1) / blockSize;

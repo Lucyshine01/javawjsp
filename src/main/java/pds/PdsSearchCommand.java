@@ -1,6 +1,7 @@
 package pds;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +19,16 @@ public class PdsSearchCommand implements PdsInterface {
 		String searchString = request.getParameter("searchString")==null ? "" : request.getParameter("searchString");
 		PdsDAO dao = new PdsDAO();
 		
+		request.setAttribute("part", part);
+		request.setAttribute("search", search);
+		request.setAttribute("searchString", searchString);
+		
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
-		int pageSize = request.getParameter("pageSize")==null? 5 : Integer.parseInt(request.getParameter("pageSize"));
-		int totRecCnt = dao.totRecCnt_search(part,search,searchString);;
+		int pageSize = request.getParameter("pageSize")==null? 10 : Integer.parseInt(request.getParameter("pageSize"));
+		int totRecCnt = dao.totRecCnt_search(part,search,searchString);
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (totRecCnt / pageSize)+1;
 		int stratIndexNo = (pag-1) * pageSize;
 		int curScrStartNo = totRecCnt - stratIndexNo;
-		
 		int blockSize = 3;
 		int curBlock = (pag - 1) / blockSize;
 		int lastBlock = (totPage-1) / blockSize;
@@ -38,6 +42,8 @@ public class PdsSearchCommand implements PdsInterface {
 		request.setAttribute("stratIndexNo", stratIndexNo);
 		request.setAttribute("curScrStartNo", curScrStartNo);
 		
+		ArrayList<PdsVO> vos = dao.searchPds(part,search,searchString,stratIndexNo,pageSize);
+		request.setAttribute("vos", vos);
 		
 	}
 

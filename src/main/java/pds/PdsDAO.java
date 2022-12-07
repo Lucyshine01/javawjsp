@@ -191,18 +191,38 @@ public class PdsDAO {
 			getConn.pstmtClose();
 		}
 	}
-
+	
+	// 검색 갯수 조회
 	public int totRecCnt_search(String part, String search, String searchString) {
 		int totRecCnt = 0;
+		int setNum = 0;
+		int allSw = 0;
 		try {
-			if(part.equals("전체")) {
-				sql = "select count(*) as cnt from pds";
+			if(search.equals("all")) {
+				if(part.equals("전체")) {
+					sql = "select count(*) as cnt from pds where nickName like ? or title like ? or content like ?";
+					setNum = 3;
+					allSw = 1;
+				}
+				else {
+					sql = "select count(*) as cnt from pds where (nickName like ? or title like ? or content like ?) and part = ?";
+					setNum = 3;
+				}
 			}
 			else {
-				sql = "select count(*) as cnt from pds where part = ?";
+				if(part.equals("전체")) {
+					sql = "select count(*) as cnt from pds where "+search+" like ?";
+					setNum = 1;
+					allSw = 1;
+				}
+				else {
+					sql = "select count(*) as cnt from pds where "+search+" like ? and part = ?";
+					setNum = 1;
+				}
 			}
 			pstmt = conn.prepareStatement(sql);
-			if(!part.equals("전체")) pstmt.setString(1, part);
+			for(int i=1; i<=setNum; i++) pstmt.setString(i, "%"+searchString+"%");
+			if(allSw != 1) pstmt.setString(setNum+1, part);
 			rs = pstmt.executeQuery();
 			rs.next();
 			totRecCnt = rs.getInt("cnt");
@@ -211,10 +231,75 @@ public class PdsDAO {
 		} finally {
 			getConn.rsClose();
 		}
-		
 		return totRecCnt;
 	}
 	
-	
+	// 검색 내용 조회
+	public ArrayList<PdsVO> searchPds(String part, String search, String searchString, int stratIndexNo, int pageSize) {
+		ArrayList<PdsVO> vos = new ArrayList<>();
+		int setNum = 0;
+		int allSw = 0;
+		try {
+			if(search.equals("all")) {
+				if(part.equals("전체")) {
+					sql = "select * from pds where nickName like ? or title like ? or content like ? ORDER BY idx desc limit ?,?";
+					setNum = 3;
+					allSw = 1;
+				}
+				else {
+					sql = "select * from pds where (nickName like ? or title like ? or content like ?) and part = ? ORDER BY idx desc limit ?,?";
+					setNum = 3;
+				}
+			}
+			else {
+				if(part.equals("전체")) {
+					sql = "select * from pds where "+search+" like ? ORDER BY idx desc limit ?,?";
+					setNum = 1;
+					allSw = 1;
+				}
+				else {
+					sql = "select * from pds where "+search+" like ? and part = ? ORDER BY idx desc limit ?,?";
+					setNum = 1;
+				}
+			}
+			pstmt = conn.prepareStatement(sql);
+			for(int i=1; i<=setNum; i++) pstmt.setString(i, "%"+searchString+"%");
+			if(allSw != 1) {
+				pstmt.setString(setNum+1, part);
+				pstmt.setInt(setNum+2, stratIndexNo);
+				pstmt.setInt(setNum+3, pageSize);
+			}
+			else {
+				pstmt.setInt(setNum+1, stratIndexNo);
+				pstmt.setInt(setNum+2, pageSize);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				vo = new PdsVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setfName(rs.getString("fName"));
+				vo.setfSName(rs.getString("fSName"));
+				vo.setfSize(rs.getInt("fSize"));
+				vo.setTitle(rs.getString("title"));
+				vo.setPart(rs.getString("part"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setfDate(rs.getString("fDate"));
+				vo.setDownNum(rs.getInt("downNum"));
+				vo.setOpenSw(rs.getString("openSw"));
+				vo.setContent(rs.getString("content"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return vos;
+	}
+
 	
 }

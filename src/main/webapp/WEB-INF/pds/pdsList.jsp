@@ -12,9 +12,27 @@
   <jsp:include page="/include/bs4.jsp"></jsp:include>
   <script>
   	'use strict';
+  	let pag = ${pag};
+  	let totPage = ${totPage};
+  	let search = "${search}";
+  	let part = "${part}";
+  	if(pag > totPage || pag <= 0){
+  		if(search != null){
+			location.href = "${ctp}/pdsSearch.pds?part="+part+"&search=${search}&searchString=${searchString}&pag=${totPage}";
+		}
+		else {
+			location.href = "${ctp}/pdsList.pds?part="+part+"&pag=${totPage}";
+		}
+  	}
   	function partCheck() {
-			let part = partForm.part.value;
-			location.href = "${ctp}/pdsList.pds?part="+part;
+			let part2 = partForm.part.value;
+			console.log("1 : "+search);
+  		if(search != null){
+				location.href = "${ctp}/pdsSearch.pds?part="+part2+"&search=${search}&searchString=${searchString}&pag=${pag}";
+  		}
+  		else {
+				location.href = "${ctp}/pdsList.pds?part="+part2;
+  		}
 		}
   	function modalView(title,nickName,mid,part,fName,fSName,fSize,downNum,fDate) {
 			let imgs = fSName.split("/");
@@ -140,7 +158,7 @@
 				alert("검색어를 입력해서 검색해주세요.");
 				return;
 			}
-			searchForm.submit;
+			searchForm.submit();
 		}
   	
   </script>
@@ -153,7 +171,13 @@
 	<div>
 		<a href="${ctp}/test.pds">test</a>
 	</div>
-  <h2>자 료 실 리 스 트(${part})</h2>
+	<c:if test="${empty search}">
+  	<h2>자 료 실 리 스 트(${part})</h2>
+  </c:if>
+	<c:if test="${!empty search}">
+  	<h2>자 료 실 검 색 목 록(${part})</h2>
+  	${searchString}을 ${search}(으)로 검색한 결과입니다. 총 ${curScrStartNo}건입니다.
+  </c:if>
   <br />
   <table class="table table-borderless">
   	<tr>
@@ -229,40 +253,67 @@
   		<c:set var="curScrStartNo" value="${curScrStartNo-1}" />
   	</c:forEach>
   </table>
-	<div class="text-center">
-	  <ul class="pagination justify-content-center">
-	    <c:if test="${pag > 1}">
-	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=1">첫페이지</a></li>
-	    </c:if>
-	    <c:if test="${curBlock > 0}">
-	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li>
-	    </c:if>
-	    <c:forEach var="i" begin="${(curBlock)*blockSize + 1}" end="${(curBlock)*blockSize + blockSize}" varStatus="st">
-	      <c:if test="${i <= totPage && i == pag}">
-	    		<li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${i}">${i}</a></li>
-	    	</c:if>
-	      <c:if test="${i <= totPage && i != pag}">
-	    		<li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${i}">${i}</a></li>
-	    	</c:if>
-	    </c:forEach>
-	    <c:if test="${curBlock < lastBlock}">
-	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${(curBlock+1)*blockSize + 1}">다음블록</a></li>
-	    </c:if>
-	    <c:if test="${pag < totPage}">
-	      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${totPage}">마지막페이지</a></li>
-	    </c:if>
-	  </ul>
-	</div>
-	
+  <c:if test="${empty search}">
+		<div class="text-center">
+		  <ul class="pagination justify-content-center">
+		    <c:if test="${pag > 1}">
+		      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=1">첫페이지</a></li>
+		    </c:if>
+		    <c:if test="${curBlock > 0}">
+		      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li>
+		    </c:if>
+		    <c:forEach var="i" begin="${(curBlock)*blockSize + 1}" end="${(curBlock)*blockSize + blockSize}" varStatus="st">
+		      <c:if test="${i <= totPage && i == pag}">
+		    		<li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${i}">${i}</a></li>
+		    	</c:if>
+		      <c:if test="${i <= totPage && i != pag}">
+		    		<li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${i}">${i}</a></li>
+		    	</c:if>
+		    </c:forEach>
+		    <c:if test="${curBlock < lastBlock}">
+		      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${(curBlock+1)*blockSize + 1}">다음블록</a></li>
+		    </c:if>
+		    <c:if test="${pag < totPage}">
+		      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsList.pds?part=${part}&pag=${totPage}">마지막페이지</a></li>
+		    </c:if>
+		  </ul>
+		</div>
+	</c:if>
+  <c:if test="${!empty search}">
+		<div class="text-center">
+		  <ul class="pagination justify-content-center">
+		    <c:if test="${pag > 1}">
+		      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsSearch.pds?part=${part}&pag=1&search=${search}&searchString=${searchString}">첫페이지</a></li>
+		    </c:if>
+		    <c:if test="${curBlock > 0}">
+		      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsSearch.pds?part=${part}&pag=${(curBlock-1)*blockSize + 1}&search=${search}&searchString=${searchString}">이전블록</a></li>
+		    </c:if>
+		    <c:forEach var="i" begin="${(curBlock)*blockSize + 1}" end="${(curBlock)*blockSize + blockSize}" varStatus="st">
+		      <c:if test="${i <= totPage && i == pag}">
+		    		<li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/pdsSearch.pds?part=${part}&pag=${i}&search=${search}&searchString=${searchString}">${i}</a></li>
+		    	</c:if>
+		      <c:if test="${i <= totPage && i != pag}">
+		    		<li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsSearch.pds?part=${part}&pag=${i}&search=${search}&searchString=${searchString}">${i}</a></li>
+		    	</c:if>
+		    </c:forEach>
+		    <c:if test="${curBlock < lastBlock}">
+		      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsSearch.pds?part=${part}&pag=${(curBlock+1)*blockSize + 1}&search=${search}&searchString=${searchString}">다음블록</a></li>
+		    </c:if>
+		    <c:if test="${pag < totPage}">
+		      <li class="page-item"><a class="page-link text-secondary" href="${ctp}/pdsSearch.pds?part=${part}&pag=${totPage}&search=${search}&searchString=${searchString}">마지막페이지</a></li>
+		    </c:if>
+		  </ul>
+		</div>
+	</c:if>
 	<br/>
 	<!-- 검색기 처리 시작 -->
 	<div class="container">
-		<form name="searchForm" method="post" action="${ctp}/pdsSearch.pds">
+		<form name="searchForm" method="post" action="${ctp}/pdsSearch.pds?part=${part}">
 			<b>검색 : </b>
 			<select name="search">
 				<option ${search=='all' ? 'selected' : '' } value="all">전체</option>
-				<option ${search=='title-content' ? 'selected' : '' } value="title-content">제목 + 내용</option>
 				<option ${search=='title' ? 'selected' : '' } value="title">제목</option>
+				<option ${search=='content' ? 'selected' : '' } value="content">내용</option>
 				<option ${search=='nickName' ? 'selected' : '' } value="nickName">닉네임</option>
 			</select>
 			<input type="text" name="searchString" id="searchString" value="${searchString}"/>
