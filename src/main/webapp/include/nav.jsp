@@ -26,7 +26,7 @@
 		        <a class="nav-link" href="${ctp}/pdsList.pds">PDS</a>
 		      </li>
 		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">STUDY</a>
+		        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">STUDY1</a>
 		        <div class="dropdown-menu">
 				      <a class="dropdown-item" href="${ctp}/pass.st">비밀번호암호화</a>
 				      <a class="dropdown-item" href="${ctp}/ajax1.st">AJax연습1</a>
@@ -37,11 +37,19 @@
 				      <a class="dropdown-item" href="${ctp}/upLoad4.st">멀티파일업로드3</a>
 				    </div>
 		      </li>
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">STUDY2</a>
+		        <div class="dropdown-menu">
+				      <a class="dropdown-item" href="${ctp}/calendar1.st">달력1</a>
+				      <a class="dropdown-item" href="${ctp}/calendar2.st">달력2</a>
+				    </div>
+		      </li>
 	      </c:if>
 	      <li class="nav-item dropdown">
 	      	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">My Page</a>
 	        <div class="dropdown-menu">
 			      <a class="dropdown-item" href="${ctp}/memMain.mem">회원방</a>
+			      <a class="dropdown-item" href="${ctp}/schedule.sc">일정관리</a>
 			      <c:if test="${level != 1}"><a class="dropdown-item" href="${ctp}/memList.mem">회원리스트</a></c:if>
 			      <a class="dropdown-item" href="${ctp}/memUpdatePwd.mem">비밀번호변경</a>
 			      <a class="dropdown-item" href="${ctp}/memPwdCheck.mem">회원정보변경</a>
