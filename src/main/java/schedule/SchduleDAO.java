@@ -29,7 +29,7 @@ public class SchduleDAO {
 				sql = "select * from schedule where mid=? and date_format(sDate,'%Y-%m')=? order by sDate,part";
 			}
 			else if(sw == 1) {
-				sql = "select * from schedule where mid=? and date_format(sDate,'%Y-%m-%d')=?";
+				sql = "select * from schedule where mid=? and date_format(sDate,'%Y-%m-%d')=? order by sDate,part";
 			}
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
@@ -65,6 +65,42 @@ public class SchduleDAO {
 			pstmt.setString(2, vo.getsDate());
 			pstmt.setString(3, vo.getPart());
 			pstmt.setString(4, vo.getContent());
+			pstmt.executeUpdate();
+			res = "1";
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
+	
+	// 스케쥴 수정처리
+	public String setSchduleUpdateOk(ScheduleVO vo) {
+		String res = "0";
+		try {
+			sql = "update schedule set part=?, content=? where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getPart());
+			pstmt.setString(2, vo.getContent());
+			pstmt.setInt(3, vo.getIdx());
+			pstmt.executeUpdate();
+			res = "1";
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
+	
+	// 스케쥴 삭제처리
+	public String setSchduleDeleteOk(int idx) {
+		String res = "0";
+		try {
+			sql = "delete from schedule where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
 			pstmt.executeUpdate();
 			res = "1";
 		} catch (SQLException e) {
