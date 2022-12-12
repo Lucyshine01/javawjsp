@@ -42,6 +42,7 @@
 		        <div class="dropdown-menu">
 				      <a class="dropdown-item" href="${ctp}/calendar1.st">달력1</a>
 				      <a class="dropdown-item" href="${ctp}/calendar2.st">달력2</a>
+				      <a class="dropdown-item" href="${ctp}/stApi.st">공공데이터연습</a>
 				    </div>
 		      </li>
 	      </c:if>

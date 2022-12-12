@@ -10,6 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import study2.Calendar.Calendar1Command;
+import study2.Calendar.Calendar2Command;
+import study2.password.PassOk2Command;
+import study2.password.PassOkCommand;
+import study2.pdstest.DownLoadCommand;
+import study2.pdstest.FileDeleteCommand;
+import study2.pdstest.JavaDownCommand;
+import study2.pdstest.UpLoad1OkCommand;
+import study2.pdstest.UpLoad2OkCommand;
+import study2.pdstest.UserDelCommand;
+import study2.pdstest.UserListCommand;
+import study2.pdstest.UserSearchCommand;
+
 @WebServlet("*.st")
 public class StudyController extends HttpServlet {
 	@Override
@@ -110,6 +123,27 @@ public class StudyController extends HttpServlet {
 			command = new Calendar2Command();
 			command.execute(request, response);
 			viewPage += "/calendar/calendar2.jsp";
+		}
+		else if(cmd.equals("/stApi")) {
+			viewPage += "/api/stApi.jsp";
+		}
+		else if(cmd.equals("/crimeApi")) {
+			viewPage += "/api/crimeApi.jsp";
+		}
+		else if(cmd.equals("/stCrimeSave")) {
+			command = new StCrimeSaveCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(cmd.equals("/stCrimeDelete")) {
+			command = new StCrimeDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(cmd.equals("/stCrimeList")) {
+			command = new StCrimeListCommand();
+			command.execute(request, response);
+			viewPage += "/api/crimeApi.jsp";
 		}
 		
 		

@@ -1,4 +1,4 @@
-package study2;
+package study2.pdstest;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import study2.StudyInterface;
 
 public class JavaDownCommand implements StudyInterface {
 

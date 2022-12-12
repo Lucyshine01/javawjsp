@@ -1,4 +1,4 @@
-package study2;
+package study2.pdstest;
 
 import java.io.IOException;
 
@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import study2.StudyInterface;
 
 public class UpLoad1OkCommand implements StudyInterface {
 

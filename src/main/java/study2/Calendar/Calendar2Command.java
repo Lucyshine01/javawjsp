@@ -1,4 +1,4 @@
-package study2;
+package study2.Calendar;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -6,6 +6,8 @@ import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import study2.StudyInterface;
 
 public class Calendar2Command implements StudyInterface {
 
