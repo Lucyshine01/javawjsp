@@ -1,0 +1,174 @@
+body {
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  margin: 0px; 
+  padding: 0px;
+}
+hr {padding: 0px; margin: 0px; border-color: #ccc;}
+.width{width: 1250px;}
+
+/* header */
+#header{
+  display: grid;
+  grid-template-columns: 270px 1fr 300px;
+  margin: 0 auto;
+  height: 110px;
+}
+#header #logo{
+  margin: 10px 50px;
+  width: 170px;
+}
+#header #head-loginimg{
+  margin: 20px 0px;
+  font-size: 1.05em;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-align: center;
+}
+#header #head-loginimg .col{
+  padding-top: 10px;
+  border-left: 1px solid #ddd;
+}
+#header #head-loginimg i{
+  font-size: 1.8em;
+}
+#header #head-loginimg a {text-decoration: none; color: #999;}
+#header #head-loginimg a:hover{text-decoration: none; color: dodgerblue;}
+
+
+/* nav */
+#nav-box{
+  margin: 0 auto;
+}
+#nav-box #nav {
+  margin: 0 auto;
+  font-size: 1.05em;
+  font-family: 'Noto Sans KR', sans-serif;
+  box-shadow: 0 -5px 10px -7px;
+}
+#nav-box #nav .nav-item{
+  position: relative;
+  padding-top: 12.5px;
+  padding-bottom: 12.5px;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+}
+#nav-box #nav .nav-borline{
+  width: 100%;
+  border-right: 1px solid #ddd;
+}
+
+#nav-box #nav #all-cat{width: 250px;}
+
+#all-cat #all-bg {
+  position: absolute;
+  display: none;
+  top: 50px;
+  margin-left: 250px;
+  padding: 0px;
+  background-color: white;
+  border: 1px solid #999;
+  border-top: 0px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0px -3px 8px -2px gray inset;
+  width: 600px;
+  height: 280px;
+  cursor: default;
+  z-index: 0;
+}
+
+#nav-box #nav #nav-right{
+  width: 250px;
+}
+#nav .nav-item .nav-main:hover {
+  color: dodgerblue;
+}
+.nav-item ul{
+  display: none;
+  padding: 0px;
+  margin: 0px;
+  position: absolute;
+  font-size: 0.9em;
+}
+.nav-item ul .ul-mt20{
+  height: 20px;
+  cursor: default;
+}
+.nav-item ul .ul-bg{
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  top: 13px;
+  background-color: white;
+  border: 1px solid #999;
+  border-top: 0px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0px -3px 8px -2px gray inset;
+  height: 280px;
+  cursor: default;
+  z-index: -1;
+}
+.nav-item ul li {
+  margin: 5px 0px 2px;
+  width: 150px;
+  list-style: none;
+  padding: 10px;
+  z-index: 0;
+}
+.nav-item ul li:hover {
+  color: dodgerblue;
+  text-shadow: 0px 2px 5px dodgerblue;
+}
+.nav-item ul hr{
+  color: #333!important;
+  margin: 0 auto;
+  width: 80%;
+  cursor: default;
+}
+.nav-item ul li:hover + hr {border-color: dodgerblue;}
+
+
+/* body */
+#body {
+  margin: 0 auto;
+  display: grid;
+}
+#body #clipTab{
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  font-family: 'Noto Sans KR', sans-serif;
+  height: 400px;
+  margin: 20px 5px;
+}
+#clipTab #clipTab_menu{
+  margin-top: 30px;
+  margin-left: 30px;
+}
+#clipTab #clipTab_menu .clipTab_menuitem{
+  padding: 7px 10px;
+  border: 1px solid #eee;
+  background-color: rgb(245, 249, 253);
+  cursor: pointer;
+}
+.clipTab_menuitem_click{
+  border: 1px solid rgb(175, 153, 255)!important;
+  background-color: white!important;
+  margin-right: -1px!important;
+  border-right: 0px!important;
+  z-index: -3!important;
+}
+#clipTab #clipTab_content{
+  position: relative;
+  margin: 30px 30px 0px 0px;
+  border: 1px solid rgb(175, 153, 255);
+  z-index: -4;
+}
+#clipTab #clipTab_content .clipTab_contitem {
+  position: absolute;
+  display: none;
+  margin: 10px;
+}
